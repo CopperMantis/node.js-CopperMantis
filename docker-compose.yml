@@ -4,7 +4,8 @@ app:
     - mongodb:mongo
   ports:
     - 1337:1337
-  volumes:
-    - .:/usr/src/app
+  env_file:
+    - ./docker/env/public.env
+    - ./docker/env/secret.env
 mongodb:
   image: mongo:3.0.4

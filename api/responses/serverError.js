@@ -11,7 +11,7 @@
  * automatically.
  */
 
-module.exports = function serverError (data, options) {
+module.exports = function serverError (data) {
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
