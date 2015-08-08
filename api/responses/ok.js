@@ -9,7 +9,7 @@
  * @param  {String|Object} options
  */
 
-module.exports = function sendOK (data, options) {
+module.exports = function sendOK (data) {
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;

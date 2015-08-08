@@ -1,6 +1,5 @@
 /**
  * app.js
- *
  */
 
 // Ensure we're in the project directory, so relative paths work as expected

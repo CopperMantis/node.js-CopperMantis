@@ -2,9 +2,13 @@
   "env": {
       "node": true
   },
+  "globals": {
+    "res": true,
+    "req": true
+  },
 	"rules": {
 		"strict": 0,
-		"quotes": [1, "single"],
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+		"quotes": [1, "single"]
 	}
 }
