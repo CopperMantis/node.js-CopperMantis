@@ -25,13 +25,13 @@ sails.js lift up.
 First run the `mongo 3.0` docker [container](https://registry.hub.docker.com/_/mongo/)
 
 ```bash
-$ docker run --rm --name cms-mongo --volume ./docker/tmp:/data/db  -p 27017:27017 -d mongo:3.0
+$ docker run --name pcms-mongo --volume $(pwd)/docker/tmp:/data/db  -p 27017:27017 -d mongo:3.0.4
 ```
 
 Then just type
 
 ```bash
-npm start
+PCMS_ADMIN_USERNAME=<username> PCMS_ADMIN_PASSWORD=<password> npm start
 ```
 
 ## FAQ
