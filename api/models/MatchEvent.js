@@ -1,14 +1,28 @@
 /**
 * MatchEvent.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: Every action triggered by a participant into a contest
 */
 
 module.exports = {
 
-  attributes: {
+  schema: false,
+  autoCreatedAt: true,
+  autoUpdatedAt: false,
 
+  attributes: {
+    owner: {
+      type: 'string',
+      required: true
+    },
+    type: {
+      type: 'string',
+      enum: ['solution_submition', 'solution_tested', 'solution_manually_reviewed'],
+      required: true
+    },
+    meta: {
+      type: 'json'
+      // Any other metadata like judge Id if it was manually reviewed
+    }
   }
 };
-

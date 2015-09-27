@@ -1,0 +1,31 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "sails": true,
+    "expect": true,
+    "sinon": true,
+    "stub": true,
+    "mock": true,
+    "chai": true,
+    "should": true,
+    "request": true,
+    "xhr": true,
+    "factory": true,
+    "TEST_NAME": true,
+    "TEST_ROOT_PATH": true,
+    "TEST_HELPERS_PATH": true,
+    "TEST_FACTORIES_PATH": true,
+    "TEST_FIXTURES_PATH": true
+  },
+  "plugins": [
+    "mocha"
+  ],
+	"rules": {
+		"strict": 0,
+    "no-unused-expressions": 0,
+		"quotes": [1, "single"]
+	}
+}

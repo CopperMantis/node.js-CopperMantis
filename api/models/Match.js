@@ -1,14 +1,21 @@
 /**
 * Match.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: The "contest" metadata
 */
 
 module.exports = {
 
-  attributes: {
+  schema: false,
+  autoCreatedAt: true,
+  autoUpdatedAt: true,
 
+  attributes: {
+    begins: {
+      type: 'date'
+    },
+    ends: {
+      type: 'date'
+    }
   }
 };
-

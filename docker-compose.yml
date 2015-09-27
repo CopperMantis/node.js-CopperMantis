@@ -1,5 +1,5 @@
 mongodb:
-  image: mongo:3.0.4
+  image: mongo:3.0
 app:
   build: .
   links:

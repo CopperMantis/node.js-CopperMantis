@@ -6,22 +6,16 @@
 
 module.exports = {
 
-  /***************************************************************************
-   * Set the default database connection for models in the production        *
-   * environment (see config/connections.js and config/models.js )           *
-   ***************************************************************************/
   models: {
-    connection: 'mongo'
+    migrate: 'safe'
   },
 
-  /***************************************************************************
-   * Default production port: 80; change env value PORT in the container     *
-   ***************************************************************************/
-  // port: 1337,
+  session: {
+    adapter: 'sails-mongo'
+  },
 
-  /***************************************************************************
-   * Set the log level in production environment to "silent"                 *
-   ***************************************************************************/
+  port: process.env.PORT,
+
   log: {
     level: 'error'
   }

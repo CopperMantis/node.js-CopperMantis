@@ -40,9 +40,18 @@ module.exports = {
       type: 'string',
       required: true
     },
+    email: {
+      type: 'string',
+      email: true
+    },
     role: {
       type: 'string',
-      defaultsTo: 'player'
+      enum: ['participant', 'judge', 'admin'],
+      defaultsTo: 'participant'
+    },
+    meta: {
+      type: 'json'
+      // Any other user metadata
     }
   },
 
