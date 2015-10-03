@@ -11,6 +11,12 @@ module.exports = {
   autoCreatedAt: true,
   autoUpdatedAt: true,
 
+  types: {
+    owned: function(ownerId){
+      return /[0-9a-fA-F]{24}/.test(ownerId) || ownerId === '0';
+    }
+  },
+
   attributes: {
     title: {
       type: 'string'
@@ -21,13 +27,15 @@ module.exports = {
       required: true
     },
     status: {
-      type: 'string'
+      type: 'string',
     },
     content: {
       type: 'text'
     },
     owner: {
-      type: 'string'
+      type: 'string',
+      owned: true,
+      required: true
     },
     meta: {
       type: 'json'
@@ -36,7 +44,7 @@ module.exports = {
     attachment: {
       type: 'array'
       // [{id: 'string'}, ... ]
-      // [{in: []}, {out: []}]
+      // [{in: [], out: []}]
     }
   }
 };

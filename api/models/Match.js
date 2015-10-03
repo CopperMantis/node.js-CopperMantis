@@ -11,10 +11,14 @@ module.exports = {
   autoUpdatedAt: true,
 
   attributes: {
-    begins: {
+    title: {
+      type: 'string',
+      defaultsTo: 'Programming contest'
+    },
+    start: {
       type: 'date'
     },
-    ends: {
+    end: {
       type: 'date'
     }
   }

@@ -6,6 +6,8 @@
 
 module.exports = {
 
+  port: process.env.PORT,
+
   models: {
     migrate: 'safe'
   },
@@ -14,10 +16,12 @@ module.exports = {
     adapter: 'sails-mongo'
   },
 
-  port: process.env.PORT,
-
   log: {
     level: 'error'
+  },
+
+  seed: {
+    active: false
   }
 
 };

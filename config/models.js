@@ -12,7 +12,6 @@
 module.exports.models = {
 
   connection: 'mongodb',
-  // This configuration is setup in config/env/*.js
-  // migrate: 'safe'
+  migrate: 'alter'
 
 };

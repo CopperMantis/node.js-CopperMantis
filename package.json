@@ -14,18 +14,21 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "bcrypt": "~0.8.5",
-    "dockerode": "~2.2.3",
-    "include-all": "~0.1.6",
-    "rc": "~0.5.0",
-    "sails": "~0.11.2",
-    "sails-mongo": "~0.11.4"
+    "bcrypt": "^0.8.5",
+    "dockerode": "^2.2.3",
+    "include-all": "^0.1.6",
+    "moment": "^2.10.6",
+    "rc": "^0.5.0",
+    "sails": "^0.11.2",
+    "sails-hook-seed": "^0.2.6",
+    "sails-mongo": "^0.11.4"
   },
   "devDependencies": {
+    "chai": "^3.3.0",
     "eslint": "^1.5.1",
     "eslint-plugin-mocha": "^1.0.0",
-    "mocha": "^2.3.3",
-    "sails-test-helper": "~0.4.4"
+    "faker": "^3.0.1",
+    "mocha": "^2.3.3"
   },
   "private": true
 }

@@ -16,14 +16,23 @@ var bcrypt = require('bcrypt');
  * @param {Function} next
  */
 function _hashPassword (inputs, next) {
-  bcrypt.hash(inputs.password, 10, function(err, hash) {
-    if(err) {
-      return next(err);
-    }
-    inputs.password = hash;
+
+  if (inputs.password) {
+    bcrypt.hash(inputs.password, 10, function(err, hash) {
+      if(err) {
+        return next(err);
+      }
+      inputs.password = hash;
+      next();
+    });
+  } else {
+    console.log(inputs);
     next();
-  });
+  }
 }
+
+// TODO: Implement soft delete https://github.com/balderdashy/waterline/pull/902
+// or even using "deletedAt" approach
 
 module.exports = {
 
@@ -34,15 +43,15 @@ module.exports = {
   attributes: {
     username: {
       type: 'string',
-      required: true
+      unique: true
     },
     password: {
       type: 'string',
       required: true
     },
     email: {
-      type: 'string',
-      email: true
+      type: 'email',
+      email: {}
     },
     role: {
       type: 'string',
@@ -52,6 +61,12 @@ module.exports = {
     meta: {
       type: 'json'
       // Any other user metadata
+    },
+    isAdmin: function () {
+      return this.role === 'admin' || this.id === 0;
+    },
+    isJudge: function () {
+      return this.role === 'judge' || this.role === 'admin' || this.id === 0;
     }
   },
 
@@ -59,9 +74,9 @@ module.exports = {
     _hashPassword(inputs, next);
   },
 
-  beforeUpdate: function (inputs, next) {
-    _hashPassword(inputs, next);
-  },
+  // beforeUpdate: function (inputs, next) {
+  //   _hashPassword(inputs, next);
+  // },
 
   /**
    * Check validness of a login using the provided inputs.
@@ -73,7 +88,7 @@ module.exports = {
    */
   attemptLogin: function (inputs, next) {
     if (inputs.username === sails.config.globals.admUsrName && inputs.password === sails.config.globals.admUsrPass) {
-      return next(null, {id: 0, rol: 'admin', username: inputs.username});
+      return next(null, {id: 0, rol: 'root', username: inputs.username});
     }
 
     this.findOne({
@@ -93,12 +108,4 @@ module.exports = {
   },
 
   hashPassword: _hashPassword,
-
-  isAdmin: function (usr) {
-    return usr !== undefined && usr.rol === 'admin';
-  },
-
-  isJudge: function (usr) {
-    return usr !== undefined && (usr.rol === 'judge' || usr.rol === 'admin');
-  }
 };

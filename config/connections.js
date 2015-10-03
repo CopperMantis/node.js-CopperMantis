@@ -10,11 +10,15 @@ module.exports.connections = {
 
   /***************************************************************************
   *                                                                          *
-  * Local disk storage for DEVELOPMENT ONLY                                  *
+  * Local disk and memory storage for DEVELOPMENT ONLY                       *
   *                                                                          *
   ***************************************************************************/
   localDiskDb: {
     adapter: 'sails-disk'
+  },
+
+  memoryDB: {
+    adapter: 'sails-memory'
   },
 
   /***************************************************************************
@@ -32,8 +36,6 @@ module.exports.connections = {
             process.env.DOCKER_HOST.match(/\d+\.\d+\.\d+\.\d+/)[0] :
             'localhost',
     port: process.env.MONGO_PORT_27017_TCP_PORT || 27017
-    // user: 'username',
-    // password: 'password',
   },
 
 };
