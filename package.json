@@ -11,7 +11,8 @@
   "main": "app.js",
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "make test"
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
