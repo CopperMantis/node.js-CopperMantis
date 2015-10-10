@@ -1,4 +1,3 @@
-var sails = require('sails');
 var expect = require('chai').expect;
 
 describe('models/Contest', function() {

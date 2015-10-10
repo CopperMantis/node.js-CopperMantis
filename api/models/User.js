@@ -15,7 +15,7 @@ var bcrypt = require('bcrypt');
  *                    - password  {String}
  * @param {Function} next
  */
-function _hashPassword (inputs, next) {
+function _hashUserPassword (inputs, next) {
 
   if (inputs.password) {
     bcrypt.hash(inputs.password, 10, function(err, hash) {
@@ -23,11 +23,10 @@ function _hashPassword (inputs, next) {
         return next(err);
       }
       inputs.password = hash;
-      next();
+      next(err, inputs);
     });
   } else {
-    console.log(inputs);
-    next();
+    next(err, inputs);
   }
 }
 
@@ -55,7 +54,7 @@ module.exports = {
     },
     role: {
       type: 'string',
-      enum: ['participant', 'judge', 'admin'],
+      enum: ['participant', 'judge', 'admin'], // "root" is a pseudo role
       defaultsTo: 'participant'
     },
     meta: {
@@ -71,41 +70,12 @@ module.exports = {
   },
 
   beforeCreate: function (inputs, next) {
-    _hashPassword(inputs, next);
+    _hashUserPassword(inputs, next);
   },
 
-  // beforeUpdate: function (inputs, next) {
-  //   _hashPassword(inputs, next);
-  // },
-
-  /**
-   * Check validness of a login using the provided inputs.
-   *
-   * @param {Object} inputs
-   *                  + username {String}
-   *                  + password {String}
-   * @param {Function} next
-   */
-  attemptLogin: function (inputs, next) {
-    if (inputs.username === sails.config.globals.admUsrName && inputs.password === sails.config.globals.admUsrPass) {
-      return next(null, {id: 0, rol: 'root', username: inputs.username});
-    }
-
-    this.findOne({
-      username: inputs.username
-    }).exec(function(err, user){
-      if (err || !user) {
-        return next(err, false);
-      }
-
-      bcrypt.compare(inputs.password, user.password, function(berr, res) {
-        if(!res) {
-          return next(err, false);
-        }
-        return next(err, user);
-      });
-    });
+  beforeUpdate: function (inputs, next) {
+    _hashUserPassword(inputs, next);
   },
 
-  hashPassword: _hashPassword,
+  hashPassword: _hashUserPassword,
 };
