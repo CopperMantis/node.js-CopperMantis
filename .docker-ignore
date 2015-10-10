@@ -1,6 +1,12 @@
 .git/
-node_modules/
-docker/
 .editorconfig
 .eslintrc
+.eslintignore
+.gitignore
+docker-compose.yml
+Dockerfile
 README.md
+*.log
+node_modules/
+docker/
+docs/

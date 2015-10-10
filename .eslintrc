@@ -1,14 +1,14 @@
 {
   "env": {
-      "node": true
+    "node": true
   },
   "globals": {
-    "res": true,
-    "req": true
+    "sails": true
   },
 	"rules": {
 		"strict": 0,
     "no-underscore-dangle": 0,
-		"quotes": [1, "single"]
+		"quotes": [1, "single"],
+    "semi": [1, "always"]
 	}
 }

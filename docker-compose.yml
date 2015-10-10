@@ -1,3 +1,5 @@
+mongodb:
+  image: mongo:3.0
 app:
   build: .
   links:
@@ -7,5 +9,3 @@ app:
   env_file:
     - ./docker/env/public.env
     - ./docker/env/secret.env
-mongodb:
-  image: mongo:3.0.4
