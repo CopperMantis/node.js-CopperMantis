@@ -19,9 +19,24 @@ module.exports.routes = {
   * them.                                                                     *
   *                                                                          *
   ***************************************************************************/
-  'GET /v1/match/:mid/events': 'MatchEventController.find',
-  'GET /v1/match/:mid/events/:eid': 'MatchEventController.findOne',
-  'PUT /v1/match/:mid/events/:eid': 'MatchEventController.update',
-  'DEL /v1/match/:mid/events/:eid': 'MatchEventController.destroy'
+
+  // Authentication endpoints
+  'POST /v1/auth/login': 'AuthController.login',
+  'POST /v1/auth/logout': 'AuthController.logout',
+  'POST /v1/auth/register': 'AuthController.register',
+  //TODO: add third party registration (via github or google mail)
+
+  // Match Content
+  'GET /v1/match/:matchId/content': 'ContentController.find',
+  'POST /v1/match/:matchId/content': 'ContentController.create',
+  'GET /v1/match/:matchId/content/:contentId': 'ContentController.findOne',
+  'PUT /v1/match/:matchId/content/:contentId': 'ContentController.update',
+  'DEL /v1/match/:matchId/content/:contentId': 'ContentController.destroy',
+
+  // MatchEvents
+  'GET /v1/match/:matchId/events': 'MatchEventController.find',
+  'GET /v1/match/:matchId/events/:matchEventId': 'MatchEventController.findOne',
+  'PUT /v1/match/:matchId/events/:matchEventId': 'MatchEventController.update',
+  'DEL /v1/match/:matchId/events/:matchEventId': 'MatchEventController.destroy'
 
 };

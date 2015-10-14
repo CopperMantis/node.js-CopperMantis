@@ -16,8 +16,10 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
+    "bluebird": "^2.10.2",
     "dockerode": "^2.2.3",
     "include-all": "^0.1.6",
+    "jsonwebtoken": "^5.4.0",
     "moment": "^2.10.6",
     "rc": "^0.5.0",
     "sails": "^0.11.2",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "chai": "^3.3.0",
+    "chai-as-promised": "^5.1.0",
     "eslint": "^1.5.1",
     "eslint-plugin-mocha": "^1.0.0",
     "faker": "^3.0.1",

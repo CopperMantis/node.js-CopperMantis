@@ -6,6 +6,9 @@
  */
 
 module.exports = {
-	
-};
+	findOne: function (req, res) {
+		sails.log.debug(req.params.all());
 
+		return res.ok();
+	}
+};

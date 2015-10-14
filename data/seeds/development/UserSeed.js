@@ -10,7 +10,7 @@ module.exports = function (done) {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: 'dummy123'
-    }
+    };
   }
 
   // 2 test users
@@ -42,4 +42,4 @@ module.exports = function (done) {
   });
 
   done(null, data);
-}
+};

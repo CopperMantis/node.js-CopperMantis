@@ -6,38 +6,13 @@
 */
 var bcrypt = require('bcrypt');
 
-/**
- * Hash your password
- *
- * @param {Object}  inputs
- *                    - username  {String}
- *                    - email     {String}
- *                    - password  {String}
- * @param {Function} next
- */
-function _hashUserPassword (inputs, next) {
-
-  if (inputs.password) {
-    bcrypt.hash(inputs.password, 10, function(err, hash) {
-      if(err) {
-        return next(err);
-      }
-      inputs.password = hash;
-      next(err, inputs);
-    });
-  } else {
-    next(err, inputs);
-  }
-}
-
-// TODO: Implement soft delete https://github.com/balderdashy/waterline/pull/902
-// or even using "deletedAt" approach
-
 module.exports = {
 
   schema: false,
   autoCreatedAt: true,
   autoUpdatedAd: true,
+  // TODO: Implement soft delete https://github.com/balderdashy/waterline/pull/902
+  // or even using "deletedAt" approach
 
   attributes: {
     username: {
@@ -66,6 +41,11 @@ module.exports = {
     },
     isJudge: function () {
       return this.role === 'judge' || this.role === 'admin' || this.id === 0;
+    },
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.password;
+      return obj;
     }
   },
 
@@ -79,3 +59,27 @@ module.exports = {
 
   hashPassword: _hashUserPassword,
 };
+
+/**
+ * Hash your password
+ *
+ * @param {Object}  userObject
+ *                    - username  {String}
+ *                    - email     {String}
+ *                    - password  {String}
+ * @param {Function} next
+ */
+function _hashUserPassword (userObject, next) {
+
+  if (userObject.password) {
+    bcrypt.hash(userObject.password, 10, function(err, hash) {
+      if(err) {
+        return next(err);
+      }
+      userObject.password = hash;
+      next(err, userObject);
+    });
+  } else {
+    next(err, userObject);
+  }
+}

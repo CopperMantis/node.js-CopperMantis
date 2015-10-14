@@ -92,7 +92,7 @@ describe('models/User', function() {
         expect(pseudoUser.password).to.exist;
         expect(pseudoUser.password).to.not.equal(password);
         done();
-      })
-    })
-  })
+      });
+    });
+  });
 });
