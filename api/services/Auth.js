@@ -11,8 +11,8 @@ var bcrypt = require('bcrypt');
 module.exports = {
   attemptLogin:  _attemptLogin,
   verifyToken: _verifyToken,
+  generateHash: _hashString
   //TODO: Register
-  //TODO: Move hashPassword here
 };
 
 /**
@@ -57,6 +57,21 @@ function _verifyToken (token) {
         reject(err);
       }
       resolve(decoded);
+    });
+  });
+}
+
+function _hashString (toBeHashed) {
+  return new Promise(function (resolve, reject) {
+    if(!toBeHashed){
+      reject({'message': 'Cannot hash an empty or null value'});
+    }
+
+    bcrypt.hash(toBeHashed, 10, function(err, result) {
+      if(err) {
+        return reject(err);
+      }
+      resolve(result);
     });
   });
 }

@@ -4,8 +4,6 @@
 * @description :: The user model
 * @docs        :: docs/UserModel.md
 */
-var bcrypt = require('bcrypt');
-
 module.exports = {
 
   schema: false,
@@ -55,9 +53,7 @@ module.exports = {
 
   beforeUpdate: function (inputs, next) {
     _hashUserPassword(inputs, next);
-  },
-
-  hashPassword: _hashUserPassword,
+  }
 };
 
 /**
@@ -69,17 +65,16 @@ module.exports = {
  *                    - password  {String}
  * @param {Function} next
  */
-function _hashUserPassword (userObject, next) {
+function _hashUserPassword (user, next) {
 
-  if (userObject.password) {
-    bcrypt.hash(userObject.password, 10, function(err, hash) {
-      if(err) {
-        return next(err);
-      }
-      userObject.password = hash;
-      next(err, userObject);
-    });
+  if (user.password) {
+    sails.services.auth.generateHash(user.password)
+      .then(function (hash) {
+        user.password = hash;
+        return next(null, user);
+      })
+      .catch(next);
   } else {
-    next(err, userObject);
+    next(null, user);
   }
 }

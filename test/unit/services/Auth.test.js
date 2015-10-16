@@ -112,4 +112,29 @@ describe('services/Auth', function() {
     });
 
   });
+
+  describe('.generateHash()', function () {
+    it('should generate a bcrypt hash from any string', function (done) {
+      var theString = 'the-pseudo-password';
+      sails.services.auth.generateHash(theString)
+        .then(function (hash) {
+          expect(hash).to.exist;
+          expect(hash).to.not.equal(theString);
+        })
+        .catch(function (err) {
+          expect(err).to.not.exist;
+        })
+        .finally(done);
+    });
+    it('should not allow to hash an undefined, null or empty value', function (done) {
+      sails.services.auth.generateHash('')
+        .then(function (hash) {
+          expect(hash).to.not.exist;
+        })
+        .catch(function (err) {
+          expect(err).to.exist;
+        })
+        .finally(done);
+    });
+  });
 });
