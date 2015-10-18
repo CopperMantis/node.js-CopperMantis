@@ -11,7 +11,8 @@ var bcrypt = require('bcrypt');
 module.exports = {
   attemptLogin:  _attemptLogin,
   verifyToken: _verifyToken,
-  generateHash: _hashString
+  generateHash: _hashString,
+  _generateToken: _generateToken
   //TODO: Register
 };
 
@@ -26,7 +27,8 @@ module.exports = {
 function _attemptLogin(inputs) {
   return new Promise(function (resolve, reject) {
     var token;
-    if (inputs.username === sails.config.globals.rootUsername && inputs.password === sails.config.globals.rootPassword) {
+    if (inputs.username === sails.config.globals.rootUsername
+      && inputs.password === sails.config.globals.rootPassword) {
       token = _generateToken({ id: 0, role: 'root' });
       return resolve({token: token});
     }

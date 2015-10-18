@@ -32,7 +32,10 @@
     "eslint": "^1.5.1",
     "eslint-plugin-mocha": "^1.0.0",
     "faker": "^3.0.1",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "node-mocks-http": "^1.4.4",
+    "sinon": "^1.17.1",
+    "supertest": "^1.1.0"
   },
   "private": true
 }
