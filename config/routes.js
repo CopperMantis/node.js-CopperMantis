@@ -22,8 +22,6 @@ module.exports.routes = {
 
   // Authentication endpoints
   'POST /v1/auth/login': 'AuthController.login',
-  'POST /v1/auth/logout': 'AuthController.logout',
-  'POST /v1/auth/register': 'AuthController.register',
   //TODO: add third party registration (via github or google mail)
 
   // Match Content

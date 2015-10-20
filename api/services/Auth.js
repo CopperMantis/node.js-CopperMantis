@@ -36,10 +36,10 @@ function _attemptLogin(inputs) {
     return sails.models.user.findOne({
       username: inputs.username
     }).then(function (user) {
-      if(!user) return reject({error: 'User not found'});
+      if(!user) return reject({message: 'User not found'});
 
       bcrypt.compare(inputs.password, user.password, function(berr, correct) {
-        if(berr || !correct) return reject({error: 'Incorrect password'});
+        if(berr || !correct) return reject({message: 'Incorrect password'});
         token = _generateToken(user);
         return resolve({token: token});
       });
@@ -66,7 +66,7 @@ function _verifyToken (token) {
 function _hashString (toBeHashed) {
   return new Promise(function (resolve, reject) {
     if(!toBeHashed){
-      reject({'message': 'Cannot hash an empty or null value'});
+      reject({ message: 'Cannot hash an empty or null value'});
     }
 
     bcrypt.hash(toBeHashed, 10, function(err, result) {

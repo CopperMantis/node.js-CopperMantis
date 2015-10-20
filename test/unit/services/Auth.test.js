@@ -64,14 +64,14 @@ describe('services/Auth', function() {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'participant101', password: 'doh!' }))
               .to.be.rejected
-              .and.to.eventually.have.property('error', 'Incorrect password')
+              .and.to.eventually.have.property('message', 'Incorrect password')
               .and.notify(done);
     });
     it('should reject the access to any unregistered user', function (done) {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'nobody', password: 'doesntmatter' }))
               .to.be.rejected
-              .and.to.eventually.have.property('error', 'User not found')
+              .and.to.eventually.have.property('message', 'User not found')
               .and.notify(done);
     });
   });
