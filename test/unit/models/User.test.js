@@ -75,6 +75,7 @@ describe('models/User', function() {
         done();
       });
     });
+
     after(function (done) {
       sails.models.user.destroy({username: 'testuser'})
       .then(function () {
@@ -83,16 +84,4 @@ describe('models/User', function() {
     });
   });
 
-  describe('.hashPassword()',function () {
-    it('should hash any password field into an object', function (done) {
-      var password = 'the-pseudo-password';
-      sails.models.user.hashPassword({ password: password }, function (err, pseudoUser) {
-        expect(err).to.not.exist;
-        expect(pseudoUser).to.exist;
-        expect(pseudoUser.password).to.exist;
-        expect(pseudoUser.password).to.not.equal(password);
-        done();
-      })
-    })
-  })
 });

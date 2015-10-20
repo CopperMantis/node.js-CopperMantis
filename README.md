@@ -31,7 +31,7 @@ $ docker run --name pcms-mongo -p 27017:27017 -d mongo:3.0
 Then just type
 
 ```bash
-PCMS_ADMIN_USERNAME=<username> PCMS_ADMIN_PASSWORD=<password> npm start
+export PCMS_ADMIN_USERNAME=<username> && export PCMS_ADMIN_PASSWORD=<password> && npm start
 ```
 
 ## FAQ

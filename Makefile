@@ -18,7 +18,7 @@ MOCHA_DEFAULT_OPTS=test/bootstrap.test.js --recursive -t 30000
 MOCHA_OPTS=-R spec
 
 ifneq "$(wildcard ./node_modules/.bin/mocha)" ""
-    MOCHA_BIN=./node_modules/.bin/mocha
+	MOCHA_BIN=./node_modules/.bin/mocha
 endif
 
 check: test

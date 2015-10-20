@@ -3,24 +3,28 @@ var moment = require('moment');
 
 module.exports = [
   {
+    owner: 0,
     title: 'Welcome page',
     type: 'page',
     status: 'published',
     content: '# Markdown title \n' + faker.lorem.paragraph()
   },
   {
+    owner: 0,
     title: 'untitle page',
     type: 'page',
     status: 'draft',
     content: '# Another markdown title \n' + faker.lorem.paragraph()
   },
   {
+    owner: 0,
     title: 'Home',
     type: 'menu',
     status: 'published',
     content: 'welcome-page'
   },
   {
+    owner: 0,
     title: 'Problems',
     type: 'menu',
     status: 'published',
@@ -30,6 +34,7 @@ module.exports = [
     }
   },
   {
+    owner: 0,
     title: 'Fibonacci',
     type: 'problem',
     status: 'published',
