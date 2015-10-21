@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 describe('models/User', function() {
   describe('.create()', function() {
-    it('should create a user as "participant" with hashed password', function(done) {
+    it('should create a user as "competitor" with hashed password', function(done) {
       sails.models.user.create({
         username: 'testuser',
         password: 'dummy123',

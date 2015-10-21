@@ -75,7 +75,7 @@ describe('policies/isJudge', function() {
 
       request.user = {
         id: 'some-mongo-id',
-        role: 'participant'
+        role: 'competitor'
       };
 
       isJudge(request, response, callback);

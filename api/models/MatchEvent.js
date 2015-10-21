@@ -1,7 +1,7 @@
 /**
 * MatchEvent.js
 *
-* @description :: Every action triggered by a participant into a contest
+* @description :: Every action triggered by a competitor into a contest
 */
 
 module.exports = {

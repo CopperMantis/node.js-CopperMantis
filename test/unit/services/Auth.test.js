@@ -7,7 +7,7 @@ describe('services/Auth', function() {
 
   before(function (done) {
     sails.models.user.create({
-      username: 'participant101',
+      username: 'competitor101',
       password: 'dummy123',
       email: 'foo@bar.com'
     }).then(function () {
@@ -41,7 +41,7 @@ describe('services/Auth', function() {
     });
     it('should recognize a competitor with its own username and password', function (done) {
       var authService = sails.services.auth;
-      return expect(authService.attemptLogin({ username: 'participant101', password: 'dummy123' }))
+      return expect(authService.attemptLogin({ username: 'competitor101', password: 'dummy123' }))
               .to.be.fulfilled
               .and.to.eventually.have.property('token').that.is.a('string')
               .and.notify(done);
@@ -62,7 +62,7 @@ describe('services/Auth', function() {
     });
     it('should reject the access to any registered user with incorrect password', function (done) {
       var authService = sails.services.auth;
-      return expect(authService.attemptLogin({ username: 'participant101', password: 'doh!' }))
+      return expect(authService.attemptLogin({ username: 'competitor101', password: 'doh!' }))
               .to.be.rejected
               .and.to.eventually.have.property('message', 'Incorrect password')
               .and.notify(done);

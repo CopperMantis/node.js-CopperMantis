@@ -6,7 +6,7 @@ describe('controllers/AuthController', function() {
   before(function (done) {
     // TODO: move this promise chaining as fixture
     sails.models.user.create({
-      username: 'participant102',
+      username: 'competitor102',
       password: 'dummy123',
       email: 'foo@bar.com'
     })
@@ -36,7 +36,7 @@ describe('controllers/AuthController', function() {
       request(sails.hooks.http.app)
         .post('/v1/auth/login')
         .set('Accept', 'application/json')
-        .send({ username: 'participant102', password: 'dummy123' })
+        .send({ username: 'competitor102', password: 'dummy123' })
         .expect(200)
         .expect('Content-Type', /json/)
         .end(function(err, res) {
@@ -50,7 +50,7 @@ describe('controllers/AuthController', function() {
       request(sails.hooks.http.app)
         .post('/v1/auth/login')
         .set('Accept', 'application/json')
-        .send({ username: 'participant102', password: 'wrong-password' })
+        .send({ username: 'competitor102', password: 'wrong-password' })
         .expect(400)
         .expect('Content-Type', /json/)
         .expect({message: 'Incorrect password'}, done);
