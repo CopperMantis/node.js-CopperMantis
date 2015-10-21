@@ -12,6 +12,13 @@
 module.exports.models = {
 
   connection: 'mongodb',
-  migrate: 'alter'
+  migrate: 'alter',
+
+  // Adding custom type "owned"
+  types: {
+    owned: function(ownerId){
+      return /[0-9a-fA-F]{24}/.test(ownerId) || ownerId === '0';
+    }
+  }
 
 };

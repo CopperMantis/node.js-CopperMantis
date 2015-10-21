@@ -15,6 +15,11 @@ module.exports = {
       type: 'string',
       defaultsTo: 'Programming contest'
     },
+    createdBy: {
+      type: 'string',
+      owned: true,
+      required: true
+    },
     status: {
       type: 'string',
       enum: ['scheduled', 'ongoing', 'finished'],

@@ -11,12 +11,6 @@ module.exports = {
   autoCreatedAt: true,
   autoUpdatedAt: true,
 
-  types: {
-    owned: function(ownerId){
-      return /[0-9a-fA-F]{24}/.test(ownerId) || ownerId === '0';
-    }
-  },
-
   attributes: {
     title: {
       type: 'string'

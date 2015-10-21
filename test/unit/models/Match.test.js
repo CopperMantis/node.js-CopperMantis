@@ -6,6 +6,7 @@ describe('models/Match', function() {
     it('should create a Match with "scheduled" default status', function (done) {
       sails.models.match.create({
         title: 'TestContest',
+        createdBy: 0,
         start: moment().toISOString(),
         end: moment().add(7, 'days').toISOString()
       }).exec(function (err, record) {
