@@ -35,5 +35,5 @@ module.exports = function forbidden (data) {
     data = undefined;
   }
 
-  return res.jsonx(data);
+  return res.jsonx(data || { message: 'Forbidden access' });
 };

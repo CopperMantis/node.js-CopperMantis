@@ -32,5 +32,5 @@ module.exports = function unauthorized (data) {
     data.error = undefined;
   }
 
-  return res.jsonx(data);
+  return res.jsonx(data || { message: 'Unauthorized access' });
 };
