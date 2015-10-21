@@ -14,7 +14,7 @@ ENV_VARS=NODE_ENV=test PORT=9999
 TEST_DIR=test/unit/
 
 MOCHA_BIN=mocha
-MOCHA_DEFAULT_OPTS=test/bootstrap.test.js --recursive -t 30000
+MOCHA_DEFAULT_OPTS=test/unit/bootstrap.test.js --recursive -t 30000
 MOCHA_OPTS=-R spec
 
 ifneq "$(wildcard ./node_modules/.bin/mocha)" ""
@@ -42,4 +42,7 @@ silent:
 %: silent
 	@:
 
-.PHONY: check clean silent test
+check-styles:
+	@$(ENV_VARS) $(MOCHA_BIN) test/style/*
+
+.PHONY: check clean silent test check-styles
