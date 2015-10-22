@@ -3,6 +3,13 @@ var expect = require('chai').expect;
 
 describe('models/Match', function() {
   describe('.create()', function () {
+
+    after(function (done) {
+      sails.models.match.drop(function (err) {
+        done();
+      });
+    });
+
     it('should create a Match with "scheduled" default status', function (done) {
       sails.models.match.create({
         title: 'TestContest',
