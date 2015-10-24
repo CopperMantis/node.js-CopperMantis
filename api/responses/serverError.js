@@ -35,5 +35,5 @@ module.exports = function serverError (data) {
     data = undefined;
   }
 
-  return res.jsonx(data);
+  return res.jsonx(data || { message: 'Internal server error' });
 };

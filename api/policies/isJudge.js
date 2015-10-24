@@ -15,5 +15,5 @@ module.exports = function(req, res, next) {
     return next();
   }
 
-  return res.unauthorized();
+  return res.forbidden({message: 'Access denied'});
 };

@@ -16,8 +16,8 @@ describe('policies/isJudge', function() {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
-      var unauthorizedSpy = sinon.spy();
-      response.unauthorized = unauthorizedSpy;
+      var forbiddenSpy = sinon.spy();
+      response.forbidden = forbiddenSpy;
 
       request.user = {
         id: 'doesnt matter at all',
@@ -26,7 +26,7 @@ describe('policies/isJudge', function() {
 
       isJudge(request, response, callback);
       expect(callback).to.be.called;
-      expect(unauthorizedSpy).to.not.be.called;
+      expect(forbiddenSpy).to.not.be.called;
       done();
     });
 
@@ -34,8 +34,8 @@ describe('policies/isJudge', function() {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
-      var unauthorizedSpy = sinon.spy();
-      response.unauthorized = unauthorizedSpy;
+      var forbiddenSpy = sinon.spy();
+      response.forbidden = forbiddenSpy;
 
       request.user = {
         id: 'doesnt matter at all',
@@ -44,7 +44,7 @@ describe('policies/isJudge', function() {
 
       isJudge(request, response, callback);
       expect(callback).to.be.called;
-      expect(unauthorizedSpy).to.not.be.called;
+      expect(forbiddenSpy).to.not.be.called;
       done();
     });
 
@@ -52,8 +52,8 @@ describe('policies/isJudge', function() {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
-      var unauthorizedSpy = sinon.spy();
-      response.unauthorized = unauthorizedSpy;
+      var forbiddenSpy = sinon.spy();
+      response.forbidden = forbiddenSpy;
 
       request.user = {
         id: 0,
@@ -62,7 +62,7 @@ describe('policies/isJudge', function() {
 
       isJudge(request, response, callback);
       expect(callback).to.be.called;
-      expect(unauthorizedSpy).to.not.be.called;
+      expect(forbiddenSpy).to.not.be.called;
       done();
     });
 
@@ -70,17 +70,17 @@ describe('policies/isJudge', function() {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
-      var unauthorizedSpy = sinon.spy();
-      response.unauthorized = unauthorizedSpy;
+      var forbiddenSpy = sinon.spy();
+      response.forbidden = forbiddenSpy;
 
       request.user = {
         id: 'some-mongo-id',
-        role: 'participant'
+        role: 'competitor'
       };
 
       isJudge(request, response, callback);
       expect(callback).to.not.be.called;
-      expect(unauthorizedSpy).to.be.called;
+      expect(forbiddenSpy).to.be.called;
       done();
     });
 

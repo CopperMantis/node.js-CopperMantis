@@ -38,5 +38,5 @@ module.exports = function badRequest(data) {
     data = undefined;
   }
 
-  return res.jsonx(data || {message: 'Bad request'});
+  return res.jsonx(data || { message: 'Bad request' });
 };

@@ -26,7 +26,16 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': true,
+
+  /**
+   * MatchController ACL
+   */
+  MatchController: {
+    create: ['hasValidToken', 'isAdmin'],
+    update: ['hasValidToken', 'isAdmin'],
+    destroy: ['hasValidToken', 'isAdmin']
+  }
 
   /***************************************************************************
   *                                                                          *

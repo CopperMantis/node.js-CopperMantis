@@ -27,8 +27,8 @@ module.exports = {
     },
     role: {
       type: 'string',
-      enum: ['participant', 'judge', 'admin'], // "root" is a pseudo role
-      defaultsTo: 'participant'
+      enum: ['competitor', 'judge', 'admin'], // "root" is a pseudo role
+      defaultsTo: 'competitor'
     },
     meta: {
       type: 'json'

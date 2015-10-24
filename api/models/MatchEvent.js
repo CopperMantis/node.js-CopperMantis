@@ -1,7 +1,7 @@
 /**
 * MatchEvent.js
 *
-* @description :: Every action triggered by a participant into a contest
+* @description :: Every action triggered by a competitor into a contest
 */
 
 module.exports = {
@@ -9,12 +9,6 @@ module.exports = {
   schema: false,
   autoCreatedAt: true,
   autoUpdatedAt: false,
-
-  types: {
-    owned: function(ownerId){
-      return /[0-9a-fA-F]{24}/.test(ownerId) || ownerId === '0';
-    }
-  },
 
   attributes: {
     owner: {
