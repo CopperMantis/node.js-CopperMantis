@@ -2,6 +2,13 @@ var expect = require('chai').expect;
 
 describe('models/MatchEvent', function() {
   describe('.create', function () {
+
+    after(function (done) {
+      sails.models.matchevent.drop(function () {
+        done();
+      });
+    });
+
     it('should create an MatchEvent',function (done) {
       sails.models.matchevent.create({
         owner: 0, // root user

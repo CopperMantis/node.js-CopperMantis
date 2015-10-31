@@ -14,10 +14,10 @@ var _ = require('lodash');
 module.exports = {
 
   create: function (req, res) {
-    var match = req.params.all();
-    _.defaults(match, { createdBy: req.user.id });
+    var match = req.body;
+    _.defaults(match, { createdBy: req.user ? req.user.id : '' });
 
-    sails.models.match.create(match).then(function () {
+    return sails.models.match.create(match).then(function () {
       res.ok({ message: 'Match succesfully created'});
     }).catch(function (err) {
       sails.log.verbose('Something went wrong with contest creation', err);
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   destroy: function (req, res) {
-    sails.models.match.destroy(res.id).then(function () {
+    return sails.models.match.destroy(req.params.id).then(function () {
       res.ok({ message: 'Match succesfully deleted'});
     }).catch(function (err) {
       sails.log.verbose('Something went wrong with contest destroy', err);

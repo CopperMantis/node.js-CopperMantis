@@ -1,70 +1,83 @@
-var request = require('supertest');
 var expect = require('chai').expect;
+var sinon = require('sinon');
+var httpMocks = require('node-mocks-http');
 
 describe('controllers/AuthController', function() {
 
-  before(function (done) {
-    // TODO: move this promise chaining as fixture
-    sails.models.user.create({
-      username: 'competitor102',
-      password: 'dummy123',
-      email: 'foo@bar.com'
-    })
-    .then(function () {
-      sails.config.globals.rootUsername = 'ninja';
-      sails.config.globals.rootPassword = 'h!dd3n';
-    })
-    .finally(done);
-  });
-
   describe('.login()', function() {
-    it('should return a token for root user [POST /v1/auth/login]', function (done) {
-      request(sails.hooks.http.app)
-        .post('/v1/auth/login')
-        .set('Accept', 'application/json')
-        .send({ username: 'ninja', password: 'h!dd3n' })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          expect(err).to.not.exist;
-          expect(res.body.token).to.exist.and.to.be.an('string');
-          done();
-        });
+
+    before(function (done) {
+      // TODO: move this promise chaining as fixture
+      sails.models.user.create({
+        username: 'competitor103',
+        password: 'dummy123',
+        email: 'foo@bar.com'
+      })
+      .then(function () {
+        sails.config.globals.rootUsername = 'ninja';
+        sails.config.globals.rootPassword = 'h!dd3n';
+      })
+      .finally(done);
     });
 
-    it('should return a token for a any registered user [POST /v1/auth/login]', function (done) {
-      request(sails.hooks.http.app)
-        .post('/v1/auth/login')
-        .set('Accept', 'application/json')
-        .send({ username: 'competitor102', password: 'dummy123' })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          expect(err).to.not.exist;
-          expect(res.body.token).to.exist.and.to.be.an('string');
-          done();
-        });
+    it('should return "ok" with a token for correct credentials', function (done) {
+      var request  = httpMocks.createRequest({
+          method: 'POST',
+          body: {
+            username: 'competitor103',
+            password: 'dummy123'
+          }
+      });
+      var response = httpMocks.createResponse();
+      var okSpy = sinon.spy();
+      response.ok = okSpy;
+
+      sails.controllers.auth.login(request, response)
+      .then(function () {
+        expect(okSpy).to.be.called;
+        expect(okSpy.args[0][0]).to.be.an('object').with.property('token');
+        done();
+      });
     });
 
-    it('should not allow to login any registered user with wrong password [POST /v1/auth/login]', function (done) {
-      request(sails.hooks.http.app)
-        .post('/v1/auth/login')
-        .set('Accept', 'application/json')
-        .send({ username: 'competitor102', password: 'wrong-password' })
-        .expect(400)
-        .expect('Content-Type', /json/)
-        .expect({message: 'Incorrect password'}, done);
+    it('should return "bad request" for registered user with wrong password', function (done) {
+      var request  = httpMocks.createRequest({
+          method: 'POST',
+          body: {
+            username: 'competitor102',
+            password: 'wrong-password'
+          }
+      });
+      var response = httpMocks.createResponse();
+      var badRequestSpy = sinon.spy();
+      response.badRequest = badRequestSpy;
+
+      sails.controllers.auth.login(request, response)
+      .then(function () {
+        expect(badRequestSpy).to.be.called;
+        expect(badRequestSpy.args[0][0]).to.be.an('object').with.property('message');
+        done();
+      });
     });
 
-    it('should not allow to login any unregistered user [POST /v1/auth/login]', function (done) {
-      request(sails.hooks.http.app)
-        .post('/v1/auth/login')
-        .set('Accept', 'application/json')
-        .send({ username: 'nobody', password: 'doesntmatter' })
-        .expect(400)
-        .expect('Content-Type', /json/)
-        .expect({message: 'User not found'}, done);
+    it('should return "bad request" for unregistered user', function (done) {
+      var request  = httpMocks.createRequest({
+          method: 'POST',
+          body: {
+            username: 'nobody',
+            password: 'doesnt-matter'
+          }
+      });
+      var response = httpMocks.createResponse();
+      var badRequestSpy = sinon.spy();
+      response.badRequest = badRequestSpy;
+
+      sails.controllers.auth.login(request, response)
+      .then(function () {
+        expect(badRequestSpy).to.be.called;
+        expect(badRequestSpy.args[0][0]).to.be.an('object').with.property('message');
+        done();
+      });
     });
   });
-
 });

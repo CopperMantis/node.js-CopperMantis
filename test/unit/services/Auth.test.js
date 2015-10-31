@@ -31,6 +31,12 @@ describe('services/Auth', function() {
     .finally(done);
   });
 
+  after(function (done) {
+    sails.models.user.drop(function () {
+      done();
+    });
+  });
+
   describe('.attemptLogin', function () {
     it('should recognize that root user is trying to login', function (done) {
       var authService = sails.services.auth;
