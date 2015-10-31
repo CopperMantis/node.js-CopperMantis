@@ -2,6 +2,13 @@ var expect = require('chai').expect;
 
 describe('models/User', function() {
   describe('.create()', function() {
+
+    after(function (done) {
+      sails.models.user.drop(function () {
+        done();
+      });
+    });
+
     it('should create a user as "competitor" with hashed password', function(done) {
       sails.models.user.create({
         username: 'testuser',
@@ -16,22 +23,26 @@ describe('models/User', function() {
         done();
       });
     });
+
     it('should not allow to create a user with a repeated username', function(done) {
       sails.models.user.create({
         username: 'testuser',
         password: 'dummy123',
         email: 'some@body.com'
-      }).then(function () {
+      })
+      .then(function () {
         return sails.models.user.create({
           username: 'testuser',
           password: 'dummy123',
           email: 'anyother@email.com'
         });
-      }).catch(function(err) {
+      })
+      .catch(function(err) {
         expect(err).to.exist;
-        done();
-      });
+      })
+      .finally(done);
     });
+
     it('should not allow to create a user as "root"', function(done) {
       sails.models.user.create({
         username: 'testuser',
@@ -41,12 +52,6 @@ describe('models/User', function() {
       }).exec(function(err, record) {
         expect(err).to.exist;
         expect(record).to.not.exist;
-        done();
-      });
-    });
-    afterEach(function (done) {
-      sails.models.user.destroy({username: 'testuser'})
-      .then(function () {
         done();
       });
     });

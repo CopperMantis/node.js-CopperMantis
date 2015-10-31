@@ -1,7 +1,14 @@
 var expect = require('chai').expect;
 
 describe('models/Contest', function() {
+
   describe('.create()', function() {
+    after(function (done) {
+      sails.models.content.drop(function () {
+        done();
+      });
+    });
+
     it('should create a "page" content type', function(done) {
       sails.models.content.create({
         title: 'The title',
