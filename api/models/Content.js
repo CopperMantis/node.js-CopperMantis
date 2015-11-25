@@ -28,12 +28,19 @@ module.exports = {
     },
     owner: {
       type: 'string',
-      owned: true,
+      validId: true,
       required: true
+    },
+    match: {
+      type: 'string',
+      validId: true
     },
     meta: {
       type: 'json'
       // Could be the "amout of points" for a desired problem or any other variable attribute.
+      // difficulty
+      // tags
+      // relatedTo
     },
     attachment: {
       type: 'array'

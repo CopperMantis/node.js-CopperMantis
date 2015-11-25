@@ -14,7 +14,7 @@ module.exports = {
     owner: {
       type: 'string',
       required: true,
-      owned: true
+      validId: true
     },
     type: {
       type: 'string',
