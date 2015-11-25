@@ -37,6 +37,7 @@
     "mocha-eslint": "^1.0.0",
     "node-mocks-http": "^1.4.4",
     "sinon": "^1.17.1",
+    "sinon-chai": "^2.8.0",
     "supertest": "^1.1.0"
   },
   "private": true

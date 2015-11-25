@@ -1,18 +1,21 @@
+var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var sinonChai = require('sinon-chai');
 var httpMocks = require('node-mocks-http');
+
+chai.use(sinonChai);
 
 describe('policies/isAdmin', function() {
 
   describe('.isAdmin', function () {
     var isAdmin;
 
-    before(function (done) {
+    before(function () {
       isAdmin = sails.hooks.policies.middleware.isadmin;
-      done();
     });
 
-    it('should let pass to any user with admin role', function (done) {
+    it('should let pass to any user with admin role', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -25,12 +28,11 @@ describe('policies/isAdmin', function() {
       };
 
       isAdmin(request, response, callback);
-      expect(callback).to.be.called;
-      expect(forbiddenSpy).to.not.be.called;
-      done();
+      expect(callback).to.have.been.called;
+      expect(forbiddenSpy).to.not.have.been.called;
     });
 
-    it('should let pass the root user', function (done) {
+    it('should let pass the root user', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -43,12 +45,11 @@ describe('policies/isAdmin', function() {
       };
 
       isAdmin(request, response, callback);
-      expect(callback).to.be.called;
-      expect(forbiddenSpy).to.not.be.called;
-      done();
+      expect(callback).to.have.been.called;
+      expect(forbiddenSpy).to.not.have.been.called;
     });
 
-    it('should not let pass to any other role', function (done) {
+    it('should not let pass to any other role', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -61,12 +62,11 @@ describe('policies/isAdmin', function() {
       };
 
       isAdmin(request, response, callback);
-      expect(callback).to.not.be.called;
-      expect(forbiddenSpy).to.be.called;
-      done();
+      expect(callback).to.not.have.been.called;
+      expect(forbiddenSpy).to.have.been.called;
     });
 
-    it('should not let pass to anonymous user', function (done) {
+    it('should not let pass to anonymous user', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -74,9 +74,8 @@ describe('policies/isAdmin', function() {
       response.unauthorized = unauthorizedSpy;
 
       isAdmin(request, response, callback);
-      expect(callback).to.not.be.called;
-      expect(unauthorizedSpy).to.be.called;
-      done();
+      expect(callback).to.not.have.been.called;
+      expect(unauthorizedSpy).to.have.been.called;
     });
   });
 });

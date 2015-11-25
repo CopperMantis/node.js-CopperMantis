@@ -1,6 +1,10 @@
+var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var sinonChai = require('sinon-chai');
 var httpMocks = require('node-mocks-http');
+
+chai.use(sinonChai);
 
 describe('policies/hasValidContentSlug', function() {
 
@@ -12,78 +16,80 @@ describe('policies/hasValidContentSlug', function() {
       done();
     });
 
-    it('should let pass any request with "menu" slug', function (done) {
-      var request = httpMocks.createRequest();
-      var response = httpMocks.createResponse();
-      var callback = sinon.spy();
-      var notFoundSpy = sinon.spy();
-      response.notFound = notFoundSpy;
-
-      request.contentSlug = 'menu';
-
-      hasValidContentSlug(request, response, callback);
-      expect(callback).to.be.called;
-      expect(notFoundSpy).to.not.be.called;
-      done();
-    });
-
-    it('should let pass any request with "page" slug', function (done) {
-      var request = httpMocks.createRequest();
-      var response = httpMocks.createResponse();
-      var callback = sinon.spy();
-      var notFoundSpy = sinon.spy();
-      response.notFound = notFoundSpy;
-
-      request.contentSlug = 'page';
-
-      hasValidContentSlug(request, response, callback);
-      expect(callback).to.be.called;
-      expect(notFoundSpy).to.not.be.called;
-      done();
-    });
-
-    it('should let pass any request with "problem" slug', function (done) {
-      var request = httpMocks.createRequest();
-      var response = httpMocks.createResponse();
-      var callback = sinon.spy();
-      var notFoundSpy = sinon.spy();
-      response.notFound = notFoundSpy;
-
-      request.contentSlug = 'problem';
-
-      hasValidContentSlug(request, response, callback);
-      expect(callback).to.be.called;
-      expect(notFoundSpy).to.not.be.called;
-      done();
-    });
-
-    it('should NOT let pass any request without content slug', function (done) {
-      var request = httpMocks.createRequest();
+    it('should let pass any request with "menu" slug', function () {
+      var request = httpMocks.createRequest({
+        params: {
+          contentSlug: 'menu'
+        }
+      });
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
       var notFoundSpy = sinon.spy();
       response.notFound = notFoundSpy;
 
       hasValidContentSlug(request, response, callback);
-      expect(callback).to.not.be.called;
-      expect(notFoundSpy).to.be.called;
-      done();
+      expect(callback).to.have.been.called;
+      expect(notFoundSpy).to.not.have.been.called;
     });
 
-    it('should NOT let pass any request with invalid content slug', function (done) {
+    it('should let pass any request with "page" slug', function () {
+      var request = httpMocks.createRequest({
+        params: {
+          contentSlug: 'page'
+        }
+      });
+      var response = httpMocks.createResponse();
+      var callback = sinon.spy();
+      var notFoundSpy = sinon.spy();
+      response.notFound = notFoundSpy;
+
+      hasValidContentSlug(request, response, callback);
+      expect(callback).to.have.been.called;
+      expect(notFoundSpy).to.not.have.been.called;
+    });
+
+    it('should let pass any request with "problem" slug', function () {
+      var request = httpMocks.createRequest({
+        params: {
+          contentSlug: 'problem'
+        }
+      });
+      var response = httpMocks.createResponse();
+      var callback = sinon.spy();
+      var notFoundSpy = sinon.spy();
+      response.notFound = notFoundSpy;
+
+      hasValidContentSlug(request, response, callback);
+      expect(callback).to.have.been.called;
+      expect(notFoundSpy).to.not.have.been.called;
+    });
+
+    it('should not let pass any request with invalid content slug', function () {
+      var request = httpMocks.createRequest({
+        params: {
+          contentSlug: 'anything'
+        }
+      });
+      var response = httpMocks.createResponse();
+      var callback = sinon.spy();
+      var notFoundSpy = sinon.spy();
+      response.notFound = notFoundSpy;
+
+      hasValidContentSlug(request, response, callback);
+      expect(callback).to.not.have.been.called;
+      expect(notFoundSpy).to.have.been.called.once;
+    });
+
+    it('should not let pass any request without content slug', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
       var notFoundSpy = sinon.spy();
       response.notFound = notFoundSpy;
 
-      request.contentSlug = 'anything';
-
       hasValidContentSlug(request, response, callback);
-      expect(callback).to.not.be.called;
-      expect(notFoundSpy).to.be.called;
-      done();
+      expect(callback).to.not.have.been.called;
+      expect(notFoundSpy).to.have.been.called;
     });
-
   });
 });

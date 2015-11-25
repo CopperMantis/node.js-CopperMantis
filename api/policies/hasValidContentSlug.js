@@ -1,5 +1,5 @@
 /**
- * hasValidConentSlug
+ * hasValidContentSlug
  *
  * @module      :: Policy
  * @description :: Check if contentSlug parameter is valid
@@ -10,9 +10,9 @@ module.exports = function(req, res, next) {
   var contentSlug = req.params.contentSlug ? req.params.contentSlug : '-';
 
   if (~ validSlugs.indexOf(contentSlug)) {
-    return res.notFound({message: 'Content type' + contentSlug + 'not found'});
+    req.meta = { type: contentSlug };
+    return next();
   }
 
-  req.meta = { type: contentSlug };
-  return next();
+  return res.notFound({message: 'Content type ' + contentSlug + ' not found'});
 };

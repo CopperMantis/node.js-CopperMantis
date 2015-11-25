@@ -2,8 +2,7 @@
   "plugins": [
     "mocha"
   ],
-	"rules": {
-    "mocha/handle-done-callback": 2,
-    "mocha/no-synchronous-tests": 2
-	}
+  "rules": {
+    "mocha/handle-done-callback": 2
+  }
 }

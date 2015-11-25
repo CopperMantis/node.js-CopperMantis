@@ -1,54 +1,56 @@
+var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var sinonChai = require('sinon-chai');
 var httpMocks = require('node-mocks-http');
+
+chai.use(sinonChai);
 
 describe('policies/isJudge', function() {
 
   describe('.isJudge', function () {
     var isJudge;
 
-    before(function (done) {
+    before(function () {
       isJudge = sails.hooks.policies.middleware.isjudge;
-      done();
     });
 
-    it('should let pass to any user with judge role', function (done) {
+    it('should let pass to any user with judge role', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
-      var callback = sinon.spy();
+      var callbackSpy = sinon.spy();
       var forbiddenSpy = sinon.spy();
       response.forbidden = forbiddenSpy;
 
       request.user = {
-        id: 'doesnt matter at all',
         role: 'judge'
       };
 
-      isJudge(request, response, callback);
-      expect(callback).to.be.called;
-      expect(forbiddenSpy).to.not.be.called;
-      done();
+      isJudge(request, response, callbackSpy);
+      expect(callbackSpy).to.have.been.called;
+      expect(forbiddenSpy).to.not.have.been.called;
     });
 
     it('should let pass to any user with admin role', function (done) {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
-      var callback = sinon.spy();
+      var callbackSpy = sinon.spy();
       var forbiddenSpy = sinon.spy();
       response.forbidden = forbiddenSpy;
 
       request.user = {
-        id: 'doesnt matter at all',
         role: 'admin'
       };
 
-      isJudge(request, response, callback);
-      expect(callback).to.be.called;
-      expect(forbiddenSpy).to.not.be.called;
-      done();
+      isJudge(request, response, callbackSpy);
+      setTimeout(function () {
+        expect(callbackSpy).to.have.been.called;
+        expect(forbiddenSpy).to.not.have.been.called;
+        done();
+      }, 100);
     });
 
-    it('should let pass the root user', function (done) {
+    it('should let pass the root user', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -61,12 +63,11 @@ describe('policies/isJudge', function() {
       };
 
       isJudge(request, response, callback);
-      expect(callback).to.be.called;
-      expect(forbiddenSpy).to.not.be.called;
-      done();
+      expect(callback).to.have.been.called;
+      expect(forbiddenSpy).to.not.have.been.called;
     });
 
-    it('should not let pass to any other role', function (done) {
+    it('should not let pass to any other role', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -79,12 +80,11 @@ describe('policies/isJudge', function() {
       };
 
       isJudge(request, response, callback);
-      expect(callback).to.not.be.called;
-      expect(forbiddenSpy).to.be.called;
-      done();
+      expect(callback).to.not.have.been.called;
+      expect(forbiddenSpy).to.have.been.called;
     });
 
-    it('should not let pass to anonymous user', function (done) {
+    it('should not let pass to anonymous user', function () {
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse();
       var callback = sinon.spy();
@@ -92,9 +92,8 @@ describe('policies/isJudge', function() {
       response.unauthorized = unauthorizedSpy;
 
       isJudge(request, response, callback);
-      expect(callback).to.not.be.called;
-      expect(unauthorizedSpy).to.be.called;
-      done();
+      expect(callback).to.not.have.been.called;
+      expect(unauthorizedSpy).to.have.been.called;
     });
   });
 });
