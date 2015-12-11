@@ -1,13 +1,15 @@
-var expect = require('chai').expect;
-var sinon = require('sinon');
-var httpMocks = require('node-mocks-http');
+var chai = require('chai');
+var sinonChai = require('sinon-chai');
+var expect = chai.expect;
+var httpMocks = require('../../helpers').factories.httpMocks;
+
+chai.use(sinonChai);
 
 describe('controllers/AuthController', function() {
 
   describe('.login()', function() {
 
     before(function (done) {
-      // TODO: move this promise chaining as fixture
       sails.models.user.create({
         username: 'competitor103',
         password: 'dummy123',
@@ -21,6 +23,7 @@ describe('controllers/AuthController', function() {
     });
 
     it('should return "ok" with a token for correct credentials', function (done) {
+
       var request  = httpMocks.createRequest({
           method: 'POST',
           body: {
@@ -28,19 +31,28 @@ describe('controllers/AuthController', function() {
             password: 'dummy123'
           }
       });
-      var response = httpMocks.createResponse();
-      var okSpy = sinon.spy();
-      response.ok = okSpy;
+
+      var response = httpMocks.createResponse({
+        spies: {
+          ok: true,
+          badRequest: true
+        }
+      });
 
       sails.controllers.auth.login(request, response)
-      .then(function () {
-        expect(okSpy).to.be.called;
-        expect(okSpy.args[0][0]).to.be.an('object').with.property('token');
-        done();
-      });
+        .then(function () {
+          expect(response.ok).to.be.called;
+          expect(response.ok.args[0][0]).to.be.an('object').with.property('token');
+          expect(response.badRequest).to.not.be.called;
+          done();
+        })
+        .catch(function (reason) {
+          done(reason);
+        });
     });
 
     it('should return "bad request" for registered user with wrong password', function (done) {
+
       var request  = httpMocks.createRequest({
           method: 'POST',
           body: {
@@ -48,19 +60,25 @@ describe('controllers/AuthController', function() {
             password: 'wrong-password'
           }
       });
-      var response = httpMocks.createResponse();
-      var badRequestSpy = sinon.spy();
-      response.badRequest = badRequestSpy;
+
+      var response = httpMocks.createResponse({
+        spies: {
+          ok: true,
+          badRequest: true
+        }
+      });
 
       sails.controllers.auth.login(request, response)
-      .then(function () {
-        expect(badRequestSpy).to.be.called;
-        expect(badRequestSpy.args[0][0]).to.be.an('object').with.property('message');
-        done();
-      });
+        .then(function () {
+          expect(response.badRequest).to.be.called;
+          expect(response.badRequest.args[0][0]).to.be.an('object').with.property('message');
+          expect(response.ok).to.not.be.called;
+          done();
+        });
     });
 
     it('should return "bad request" for unregistered user', function (done) {
+
       var request  = httpMocks.createRequest({
           method: 'POST',
           body: {
@@ -68,16 +86,21 @@ describe('controllers/AuthController', function() {
             password: 'doesnt-matter'
           }
       });
-      var response = httpMocks.createResponse();
-      var badRequestSpy = sinon.spy();
-      response.badRequest = badRequestSpy;
+
+      var response = httpMocks.createResponse({
+        spies: {
+          ok: true,
+          badRequest: true
+        }
+      });
 
       sails.controllers.auth.login(request, response)
-      .then(function () {
-        expect(badRequestSpy).to.be.called;
-        expect(badRequestSpy.args[0][0]).to.be.an('object').with.property('message');
-        done();
-      });
+        .then(function () {
+          expect(response.badRequest).to.be.called;
+          expect(response.badRequest.args[0][0]).to.be.an('object').with.property('message');
+          expect(response.ok).to.not.be.called;
+          done();
+        });
     });
   });
 });

@@ -1,8 +1,8 @@
 var chai = require('chai');
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
-var httpMocks = require('node-mocks-http');
+var expect = chai.expect;
+var httpMocks = require('../../helpers').factories.httpMocks;
 
 chai.use(sinonChai);
 
@@ -16,21 +16,24 @@ describe('policies/hasValidToken', function() {
     });
 
     it('should decode the user id and role from valid token', function (done) {
+
       var validToken = sails.services.auth._generateToken({id: 0, role: 'root'});
       var request = httpMocks.createRequest({
         headers: {
           Authorization: 'Bearer ' + validToken
         }
       });
-      var response = httpMocks.createResponse();
-      var unauthorizedSpy = sinon.spy();
+      var response = httpMocks.createResponse({
+        spies: {
+          unauthorized: true
+        }
+      });
       var callbackSpy = sinon.spy();
-      response.unauthorized = unauthorizedSpy;
 
       hasValidToken(request, response, callbackSpy);
       setTimeout(function () {
         expect(callbackSpy).to.have.been.called;
-        expect(unauthorizedSpy).to.not.have.been.called;
+        expect(response.unauthorized).to.not.have.been.called;
         expect(request.user).to.be.an('object');
         expect(request.user.id).to.exist;
         expect(request.user.role).to.exist;
@@ -41,20 +44,24 @@ describe('policies/hasValidToken', function() {
     });
 
     it('should not allow to continue when it provides an invalid token', function (done) {
+
       var request = httpMocks.createRequest({
         headers: {
           Authorization: 'Bearer invalid'
         }
       });
-      var response = httpMocks.createResponse();
-      var unauthorizedSpy = sinon.spy();
+      var response = httpMocks.createResponse({
+        spies: {
+          unauthorized: true
+        }
+      });
       var callbackSpy = sinon.spy();
-      response.unauthorized = unauthorizedSpy;
 
       hasValidToken(request, response, callbackSpy);
       setTimeout(function () {
         expect(callbackSpy).to.not.have.been.called;
-        expect(unauthorizedSpy).to.have.been.called;
+        expect(response.unauthorized).to.have.been.called;
+        expect(response.unauthorized.args[0][0]).to.exist;
         done();
       }, 100);
     });
