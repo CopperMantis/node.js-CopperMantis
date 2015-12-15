@@ -12,7 +12,7 @@ module.exports = {
     return request;
   },
   createResponse: function (options) {
-    var spies = options.spies;
+    var spies = options ? options.spies : {};
     var response = httpMocks.createResponse(options);
 
     _.forIn(spies, function (value, key) {

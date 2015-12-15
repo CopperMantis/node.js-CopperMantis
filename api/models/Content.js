@@ -1,7 +1,7 @@
 /**
 * Content.js
 *
-* @description :: Any written representation of something else like: pages, problems
+* @description :: Any written representation of document like: pages, problems
 * menu items and submited solutions.
 */
 
