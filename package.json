@@ -12,31 +12,31 @@
   "scripts": {
     "debug": "node debug app.js",
     "start": "node app.js",
-    "test": "make test"
+    "test": "NODE_ENV=test PORT=9999 mocha test/bootstrap.test.js --recursive -t 30000 -R spec test/"
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
     "bluebird": "^2.10.2",
-    "dockerode": "^2.2.3",
+    "dockerode": "^2.2.7",
     "include-all": "^0.1.6",
-    "jsonwebtoken": "^5.4.0",
+    "jsonwebtoken": "^5.4.1",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "rc": "^0.5.0",
-    "sails": "^0.11.2",
+    "sails": "^0.11.3",
     "sails-hook-seed": "^0.2.6",
-    "sails-mongo": "^0.11.4"
+    "sails-mongo": "^0.11.5"
   },
   "devDependencies": {
-    "chai": "^3.3.0",
+    "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
-    "eslint": "^1.5.1",
-    "eslint-plugin-mocha": "^1.0.0",
+    "eslint": "^1.10.3",
+    "eslint-plugin-mocha": "^1.1.0",
     "faker": "^3.0.1",
-    "mocha": "^2.3.3",
+    "mocha": "^2.3.4",
     "mocha-eslint": "^1.0.0",
-    "node-mocks-http": "^1.4.4",
-    "sinon": "^1.17.1",
+    "node-mocks-http": "^1.5.1",
+    "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
     "supertest": "^1.1.0"
   },
