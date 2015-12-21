@@ -8,42 +8,37 @@
  *
  * Any policy file (e.g. `api/policies/authenticated.js`) can be accessed
  * below by its filename, minus the extension, (e.g. "authenticated")
- *
- * For more information on how policies work, see:
- * http://sailsjs.org/#!/documentation/concepts/Policies
- *
- * For more information on configuring policies, check out:
- * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.policies.html
  */
-
 
 module.exports.policies = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions (`true` allows public     *
-  * access)                                                                  *
-  *                                                                          *
-  ***************************************************************************/
-
+  // Default policy for all controllers and actions
   '*': false,
 
-  /**
-   * AuthController ACL
-   */
   AuthController: {
     login: true
   },
 
-  /**
-   * MatchController ACL
-   */
   MatchController: {
     find: true,
     findOne: true,
     create: ['hasValidToken', 'isAdmin'],
     update: ['hasValidToken', 'isAdmin'],
     destroy: ['hasValidToken', 'isAdmin']
-  }
+  },
+
+  ContentController: {
+    findByMatch: ['hasValidContentSlug','hasValidToken'],
+    findOneByMatch: ['hasValidContentSlug','hasValidToken'],
+    find: ['hasValidContentSlug'],
+    findOne: ['hasValidContentSlug', 'hasValidToken', 'isAdmin'],
+    create: ['hasValidContentSlug', 'hasValidToken', 'isAdmin'],
+    update: ['hasValidContentSlug', 'hasValidToken', 'isAdmin'],
+    destroy: ['hasValidContentSlug', 'hasValidToken', 'isAdmin']
+  },
+
+  SolutionController: {
+    '*': 'hasValidToken'
+  },
 
 };

@@ -17,7 +17,7 @@ module.exports = {
     },
     createdBy: {
       type: 'string',
-      owned: true,
+      validId: true,
       required: true
     },
     status: {

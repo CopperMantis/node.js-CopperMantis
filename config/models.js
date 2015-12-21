@@ -16,8 +16,8 @@ module.exports.models = {
 
   // Adding custom type "owned"
   types: {
-    owned: function(ownerId){
-      return /[0-9a-fA-F]{24}/.test(ownerId) || ownerId === '0';
+    validId: function(id){
+      return /[0-9a-fA-F]{24}/.test(id) || id === '0';
     }
   }
 

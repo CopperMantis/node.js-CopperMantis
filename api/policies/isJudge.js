@@ -6,12 +6,13 @@
  *
  */
 module.exports = function(req, res, next) {
+  var roles = 'judge,admin';
 
   if (!req.user || !req.user.role) {
     return res.unauthorized({message: 'You must be authenticated'});
   }
 
-  if (req.user.role.indexOf('judge,admin') >= 0 || req.user.id === 0 ) {
+  if (~ roles.indexOf(req.user.role) || req.user.id === 0 ) {
     return next();
   }
 

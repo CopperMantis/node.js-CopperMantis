@@ -2,39 +2,37 @@
  * Route Mappings
  * (sails.config.routes)
  *
- * Your routes map URLs to views and controllers.
+ * Routes mapping URLs for controllers. Only the non blueprint urls are listed
+ * in this file.
  *
- * For more information on configuring custom routes, check out:
- * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
 module.exports.routes = {
 
+  /*****************************************************************************
+   * Root endpoints                                                            *
+   * - Good option for health check                                            *
+   * - They don't rely on any database access or view rendering                *
+   ****************************************************************************/
   '/': { response: 'ok'},
   '/v1': { response: 'ok'},
 
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here... Sadly we have to EXPLICITLY write /v1 in each of   *
-  * them.                                                                     *
-  *                                                                          *
-  ***************************************************************************/
-
-  // Authentication endpoints
+  /*****************************************************************************
+   * User authentication and registration endpoints.                           *
+   * - Non restful endpoints                                                   *
+   ****************************************************************************/
   'POST /v1/auth/login': 'AuthController.login',
-  //TODO: add third party registration (via github or google mail)
 
-  // Match Content
-  'GET /v1/match/:matchId/content': 'ContentController.find',
-  'POST /v1/match/:matchId/content': 'ContentController.create',
-  'GET /v1/match/:matchId/content/:contentId': 'ContentController.findOne',
-  'PUT /v1/match/:matchId/content/:contentId': 'ContentController.update',
-  'DEL /v1/match/:matchId/content/:contentId': 'ContentController.destroy',
-
-  // MatchEvents
-  'GET /v1/match/:matchId/events': 'MatchEventController.find',
-  'GET /v1/match/:matchId/events/:matchEventId': 'MatchEventController.findOne',
-  'PUT /v1/match/:matchId/events/:matchEventId': 'MatchEventController.update',
-  'DEL /v1/match/:matchId/events/:matchEventId': 'MatchEventController.destroy'
-
+  /*****************************************************************************
+   * Content Endpoints                                                         *
+   * - Explicitly declared endpoints                                           *
+   * - Each of these endpoinst rely hasValidContentSlug policy                 *
+   ****************************************************************************/
+  'GET /v1/content/:contentSlug': 'ContentController.find',
+  'POST /v1/content/:contentSlug': 'ContentController.create',
+  'PUT /v1/content/:contentSlug/:id': 'ContentController.update',
+  'GET /v1/content/:contentSlug/:id': 'ContentController.findOne',
+  'DELETE /v1/content/:contentSlug/:id': 'ContentController.destroy',
+  'GET /v1/match/:matchId/:contentSlug': 'ContentController.findByMatch',
+  'GET /v1/match/:matchId/:contentSlug/:id': 'ContentController.findOneByMatch',
 };

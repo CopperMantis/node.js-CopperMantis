@@ -1,7 +1,7 @@
 /**
 * Content.js
 *
-* @description :: Any written representation of something else like: pages, problems
+* @description :: Any written representation of document like: pages, problems
 * menu items and submited solutions.
 */
 
@@ -28,12 +28,19 @@ module.exports = {
     },
     owner: {
       type: 'string',
-      owned: true,
+      validId: true,
       required: true
+    },
+    match: {
+      type: 'string',
+      validId: true
     },
     meta: {
       type: 'json'
       // Could be the "amout of points" for a desired problem or any other variable attribute.
+      // difficulty
+      // tags
+      // relatedTo
     },
     attachment: {
       type: 'array'

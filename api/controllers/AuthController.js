@@ -20,9 +20,4 @@ module.exports = {
     // TODO
   },
 
-  _config: {
-    actions: false,
-    shortcuts: false,
-    rest: false
-  }
 };
