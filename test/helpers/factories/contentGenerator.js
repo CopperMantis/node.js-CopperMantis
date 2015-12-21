@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var faker = require('faker');
-var moment = require('moment');
 
 module.exports = {
   randomPage: function (base) {
