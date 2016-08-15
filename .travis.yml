@@ -10,3 +10,5 @@ script:
   - npm run test
 after_sucess:
   - npm run coverage
+services:
+  - mongodb

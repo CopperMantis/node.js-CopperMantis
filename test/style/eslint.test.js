@@ -7,7 +7,7 @@ var lint = require('mocha-eslint');
 var paths = [
   'api/**/*.js',
   'config/**/*.js',
-  'test/**/*.test.js',
+  'test/**/*.test.js'
 ];
 
 // Run the tests

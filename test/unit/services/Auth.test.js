@@ -38,47 +38,41 @@ describe('services/Auth', function() {
   });
 
   describe('.attemptLogin', function () {
-    it('should recognize that root user is trying to login', function (done) {
+    it('should recognize that root user is trying to login', function () {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'ninja', password: 'h!dd3n' }))
-              .to.be.fulfilled
-              .and.to.eventually.have.property('token').that.is.a('string')
-              .and.notify(done);
+        .to.be.fulfilled
+        .and.to.eventually.have.property('token').that.is.a('string');
     });
-    it('should recognize a competitor with its own username and password', function (done) {
+    it('should recognize a competitor with its own username and password', function () {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'competitor101', password: 'dummy123' }))
-              .to.be.fulfilled
-              .and.to.eventually.have.property('token').that.is.a('string')
-              .and.notify(done);
+        .to.be.fulfilled
+        .and.to.eventually.have.property('token').that.is.a('string');
     });
-    it('should recognize a judge with its own username and password', function (done) {
+    it('should recognize a judge with its own username and password', function () {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'judge101', password: 'dummy123' }))
-              .to.be.fulfilled
-              .and.to.eventually.have.property('token').that.is.a('string')
-              .and.notify(done);
+        .to.be.fulfilled
+        .and.to.eventually.have.property('token').that.is.a('string');
     });
-    it('should recognize a admin with its own username and password', function (done) {
+    it('should recognize a admin with its own username and password', function () {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'admin101', password: 'dummy123' }))
-              .to.be.fulfilled
-              .and.to.eventually.have.property('token').that.is.a('string')
-              .and.notify(done);
+        .to.be.fulfilled
+        .and.to.eventually.have.property('token').that.is.a('string');
     });
-    it('should reject the access to any registered user with incorrect password', function (done) {
+    it('should reject the access to any registered user with incorrect password', function () {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'competitor101', password: 'doh!' }))
-              .to.be.rejected
-              .and.to.eventually.have.property('message', 'Incorrect password')
-              .and.notify(done);
+        .to.be.rejected
+        .and.to.eventually.have.property('message', 'Incorrect password');
     });
-    it('should reject the access to any unregistered user', function (done) {
+    it('should reject the access to any unregistered user', function () {
       var authService = sails.services.auth;
       return expect(authService.attemptLogin({ username: 'nobody', password: 'doesntmatter' }))
-              .to.be.rejected
-              .and.to.eventually.have.property('message', 'User not found')
-              .and.notify(done);
+        .to.be.rejected
+        .and.to.eventually.have.property('message', 'User not found');
     });
   });
 
@@ -86,11 +80,12 @@ describe('services/Auth', function() {
     var sharedToken;
 
     before(function (done) {
-      sails.services.auth.attemptLogin({ username: 'ninja', password: 'h!dd3n' })
-      .then(function (result) {
-        sharedToken = result.token;
-      })
-      .finally(done);
+      sails.services.auth
+        .attemptLogin({ username: 'ninja', password: 'h!dd3n' })
+        .then(function (result) {
+          sharedToken = result.token;
+        })
+        .finally(done);
     });
 
     it('should return an access object from a valid token', function (done) {
