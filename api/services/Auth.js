@@ -6,7 +6,7 @@
 
 var jwt = require('jsonwebtoken');
 var Promise = require('bluebird');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 module.exports = {
   attemptLogin: _attemptLogin,
