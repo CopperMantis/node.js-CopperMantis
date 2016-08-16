@@ -6,8 +6,7 @@ var httpMocks = require('../../helpers').factories.httpMocks;
 
 chai.use(sinonChai);
 
-describe('policies/isJudge', function() {
-
+describe('policies/isJudge', function () {
   describe('.isJudge', function () {
     var isJudge;
 
@@ -16,7 +15,6 @@ describe('policies/isJudge', function() {
     });
 
     it('should let pass to any user with judge role', function () {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {
@@ -37,7 +35,6 @@ describe('policies/isJudge', function() {
     });
 
     it('should let pass to any user with admin role', function (done) {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {
@@ -61,7 +58,6 @@ describe('policies/isJudge', function() {
     });
 
     it('should let pass the root user', function () {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {
@@ -83,7 +79,6 @@ describe('policies/isJudge', function() {
     });
 
     it('should not let pass to any other role', function () {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {

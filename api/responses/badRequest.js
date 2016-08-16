@@ -14,8 +14,7 @@
  * ```
  */
 
-module.exports = function badRequest(data) {
-
+module.exports = function badRequest (data) {
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
   var res = this.res;

@@ -21,7 +21,7 @@ module.exports = {
       required: true
     },
     status: {
-      type: 'string',
+      type: 'string'
     },
     content: {
       type: 'text'

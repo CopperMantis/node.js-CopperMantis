@@ -10,7 +10,6 @@
  */
 
 module.exports = function sendOK (data) {
-
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
   var res = this.res;
@@ -21,6 +20,5 @@ module.exports = function sendOK (data) {
   // Set status code
   res.status(200);
 
-  return res.jsonx( data || { message: 'ok' } );
-
+  return res.jsonx(data || { message: 'ok' });
 };

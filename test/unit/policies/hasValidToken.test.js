@@ -6,8 +6,7 @@ var httpMocks = require('../../helpers').factories.httpMocks;
 
 chai.use(sinonChai);
 
-describe('policies/hasValidToken', function() {
-
+describe('policies/hasValidToken', function () {
   describe('.hasValidToken', function () {
     var hasValidToken;
 
@@ -16,7 +15,6 @@ describe('policies/hasValidToken', function() {
     });
 
     it('should decode the user id and role from valid token', function (done) {
-
       var validToken = sails.services.auth._generateToken({id: 0, role: 'root'});
       var request = httpMocks.createRequest({
         headers: {
@@ -44,7 +42,6 @@ describe('policies/hasValidToken', function() {
     });
 
     it('should not allow to continue when it provides an invalid token', function (done) {
-
       var request = httpMocks.createRequest({
         headers: {
           Authorization: 'Bearer invalid'

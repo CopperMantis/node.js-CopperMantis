@@ -3,8 +3,7 @@ var expect = require('chai').expect;
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 
-describe('services/Auth', function() {
-
+describe('services/Auth', function () {
   before(function (done) {
     sails.models.user.create({
       username: 'competitor101',
@@ -111,7 +110,6 @@ describe('services/Auth', function() {
       })
       .finally(done);
     });
-
   });
 
   describe('.generateHash()', function () {

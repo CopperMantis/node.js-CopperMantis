@@ -8,7 +8,7 @@ module.exports = {
       title: faker.lorem.sentence(),
       createdBy: 0,
       start: moment().toISOString(),
-      end: moment().add( Math.floor(Math.random() * 15 ), 'days').toISOString()
+      end: moment().add(Math.floor(Math.random() * 15), 'days').toISOString()
     };
 
     _.merge(match, base);

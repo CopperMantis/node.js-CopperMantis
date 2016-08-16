@@ -1,11 +1,10 @@
 var moment = require('moment');
 var expect = require('chai').expect;
 
-describe('models/Match', function() {
+describe('models/Match', function () {
   describe('.create()', function () {
-
     after(function (done) {
-      sails.models.match.drop(function (err) {
+      sails.models.match.drop(function () {
         done();
       });
     });

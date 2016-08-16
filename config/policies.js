@@ -28,8 +28,8 @@ module.exports.policies = {
   },
 
   ContentController: {
-    findByMatch: ['hasValidContentSlug','hasValidToken'],
-    findOneByMatch: ['hasValidContentSlug','hasValidToken'],
+    findByMatch: ['hasValidContentSlug', 'hasValidToken'],
+    findOneByMatch: ['hasValidContentSlug', 'hasValidToken'],
     find: ['hasValidContentSlug'],
     findOne: ['hasValidContentSlug', 'hasValidToken', 'isAdmin'],
     create: ['hasValidContentSlug', 'hasValidToken', 'isAdmin'],
@@ -39,6 +39,6 @@ module.exports.policies = {
 
   SolutionController: {
     '*': 'hasValidToken'
-  },
+  }
 
 };

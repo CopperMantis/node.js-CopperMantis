@@ -9,11 +9,11 @@ var Promise = require('bluebird');
 var bcrypt = require('bcrypt');
 
 module.exports = {
-  attemptLogin:  _attemptLogin,
+  attemptLogin: _attemptLogin,
   verifyToken: _verifyToken,
   generateHash: _hashString,
   _generateToken: _generateToken
-  //TODO: Register
+  // TODO: Register
 };
 
 /**
@@ -24,11 +24,11 @@ module.exports = {
  *                  + password {String}
  * @return {Promise} with token
  */
-function _attemptLogin(inputs) {
+function _attemptLogin (inputs) {
   return new Promise(function (resolve, reject) {
     var token;
-    if (inputs.username === sails.config.globals.rootUsername
-      && inputs.password === sails.config.globals.rootPassword) {
+    if (inputs.username === sails.config.globals.rootUsername &&
+        inputs.password === sails.config.globals.rootPassword) {
       token = _generateToken({ id: 0, role: 'root' });
       return resolve({token: token});
     }
@@ -36,10 +36,10 @@ function _attemptLogin(inputs) {
     return sails.models.user.findOne({
       username: inputs.username
     }).then(function (user) {
-      if(!user) return reject({message: 'User not found'});
+      if (!user) return reject({message: 'User not found'});
 
-      bcrypt.compare(inputs.password, user.password, function(berr, correct) {
-        if(berr || !correct) return reject({message: 'Incorrect password'});
+      bcrypt.compare(inputs.password, user.password, function (berr, correct) {
+        if (berr || !correct) return reject({message: 'Incorrect password'});
         token = _generateToken(user);
         return resolve({token: token});
       });
@@ -47,8 +47,8 @@ function _attemptLogin(inputs) {
   });
 }
 
-function _generateToken(user) {
-  var token = jwt.sign({ id: user.id, role: user.role }, sails.config.globals.jwtSecret, { expiresIn: '7d' } );
+function _generateToken (user) {
+  var token = jwt.sign({ id: user.id, role: user.role }, sails.config.globals.jwtSecret, { expiresIn: '7d' });
   return token;
 }
 
@@ -65,12 +65,12 @@ function _verifyToken (token) {
 
 function _hashString (toBeHashed) {
   return new Promise(function (resolve, reject) {
-    if(!toBeHashed){
-      reject({ message: 'Cannot hash an empty or null value'});
+    if (!toBeHashed) {
+      reject({ message: 'Cannot hash an empty or null value' });
     }
 
-    bcrypt.hash(toBeHashed, 10, function(err, result) {
-      if(err) {
+    bcrypt.hash(toBeHashed, 10, function (err, result) {
+      if (err) {
         return reject(err);
       }
       resolve(result);
