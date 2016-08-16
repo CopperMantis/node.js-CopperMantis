@@ -6,8 +6,7 @@ var httpMocks = require('../../helpers').factories.httpMocks;
 
 chai.use(sinonChai);
 
-describe('policies/hasValidContentSlug', function() {
-
+describe('policies/hasValidContentSlug', function () {
   describe('.hasValidContentSlug', function () {
     var hasValidContentSlug;
 
@@ -17,7 +16,6 @@ describe('policies/hasValidContentSlug', function() {
     });
 
     it('should let pass any request with "menu" slug', function () {
-
       var request = httpMocks.createRequest({
         params: {
           contentSlug: 'menu'
@@ -38,7 +36,6 @@ describe('policies/hasValidContentSlug', function() {
     });
 
     it('should let pass any request with "page" slug', function () {
-
       var request = httpMocks.createRequest({
         params: {
           contentSlug: 'page'
@@ -59,7 +56,6 @@ describe('policies/hasValidContentSlug', function() {
     });
 
     it('should let pass any request with "problem" slug', function () {
-
       var request = httpMocks.createRequest({
         params: {
           contentSlug: 'problem'
@@ -80,7 +76,6 @@ describe('policies/hasValidContentSlug', function() {
     });
 
     it('should not let pass any request with invalid content slug', function () {
-
       var request = httpMocks.createRequest({
         params: {
           contentSlug: 'anything'
@@ -101,7 +96,6 @@ describe('policies/hasValidContentSlug', function() {
     });
 
     it('should not let pass any request without content slug', function () {
-
       var request = httpMocks.createRequest();
 
       var response = httpMocks.createResponse({

@@ -8,7 +8,7 @@
 
 module.exports.connections = {
 
-  /***************************************************************************
+  /** ************************************************************************
   *                                                                          *
   * Local disk and memory storage for DEVELOPMENT ONLY                       *
   *                                                                          *
@@ -21,7 +21,7 @@ module.exports.connections = {
     adapter: 'sails-memory'
   },
 
-  /***************************************************************************
+  /** ************************************************************************
   *                                                                          *
   * MongoDB.                                                                 *
   *                                                                          *
@@ -32,10 +32,10 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     database: 'CopperMantis',
     host: process.env.MONGO_PORT_27017_TCP_ADDR ||
-          process.env.DOCKER_HOST ?
-            process.env.DOCKER_HOST.match(/\d+\.\d+\.\d+\.\d+/)[0] :
-            'localhost',
+          process.env.DOCKER_HOST
+            ? process.env.DOCKER_HOST.match(/\d+\.\d+\.\d+\.\d+/)[0]
+            : 'localhost',
     port: process.env.MONGO_PORT_27017_TCP_PORT || 27017
-  },
+  }
 
 };

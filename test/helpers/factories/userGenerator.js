@@ -10,9 +10,9 @@ module.exports = {
       email: faker.internet.email()
     };
 
-    _.merge(page, base);
+    _.merge(user, base);
 
-    return page;
+    return user;
   },
   randomJudge: function (base) {
     var user = {
@@ -22,9 +22,9 @@ module.exports = {
       role: 'judge'
     };
 
-    _.merge(page, base);
+    _.merge(user, base);
 
-    return page;
+    return user;
   },
   randomAdmin: function (base) {
     var user = {
@@ -34,8 +34,8 @@ module.exports = {
       role: 'admin'
     };
 
-    _.merge(page, base);
+    _.merge(user, base);
 
-    return page;
-  },
+    return user;
+  }
 };

@@ -9,6 +9,6 @@
  */
 
 module.exports.seed = {
-    path: 'data/seeds',
-    active: !!process.env.WATERLINE_MIGRATE
+  path: 'data/seeds',
+  active: !!process.env.WATERLINE_MIGRATE
 };

@@ -40,7 +40,7 @@ module.exports = {
     isJudge: function () {
       return this.role === 'judge' || this.role === 'admin' || this.id === 0;
     },
-    toJSON: function() {
+    toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
       return obj;
@@ -66,7 +66,6 @@ module.exports = {
  * @param {Function} next
  */
 function _hashUserPassword (user, next) {
-
   if (user.password) {
     sails.services.auth.generateHash(user.password)
       .then(function (hash) {

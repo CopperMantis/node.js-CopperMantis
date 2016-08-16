@@ -6,8 +6,7 @@ var httpMocks = require('../../helpers').factories.httpMocks;
 
 chai.use(sinonChai);
 
-describe('policies/isAdmin', function() {
-
+describe('policies/isAdmin', function () {
   describe('.isAdmin', function () {
     var isAdmin;
 
@@ -16,7 +15,6 @@ describe('policies/isAdmin', function() {
     });
 
     it('should let pass to any user with admin role', function () {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {
@@ -38,7 +36,6 @@ describe('policies/isAdmin', function() {
     });
 
     it('should let pass the root user', function () {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {
@@ -60,7 +57,6 @@ describe('policies/isAdmin', function() {
     });
 
     it('should not let pass to any other role', function () {
-
       var request = httpMocks.createRequest({
         extra: {
           user: {
@@ -76,14 +72,12 @@ describe('policies/isAdmin', function() {
       });
       var callback = sinon.spy();
 
-
       isAdmin(request, response, callback);
       expect(callback).to.not.have.been.called;
       expect(response.forbidden).to.have.been.called;
     });
 
     it('should not let pass to anonymous user', function () {
-
       var request = httpMocks.createRequest();
       var response = httpMocks.createResponse({
         spies: {

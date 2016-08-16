@@ -2,7 +2,7 @@ var request = require('supertest');
 var expect = require('chai').expect;
 var moment = require('moment');
 
-describe('/v1/match', function() {
+describe('/v1/match', function () {
   var rootToken;
   var adminToken;
   var judgeToken;
@@ -43,14 +43,13 @@ describe('/v1/match', function() {
   });
 
   describe('[GET] /', function () {
-
     before(function (done) {
       sails.models.match.create({
-          title: 'Contest 1',
-          createdBy: 0,
-          start: moment().toISOString(),
-          end: moment().add(7, 'days').toISOString()
-        })
+        title: 'Contest 1',
+        createdBy: 0,
+        start: moment().toISOString(),
+        end: moment().add(7, 'days').toISOString()
+      })
         .then(function () {
           return sails.models.match.create({
             title: 'Contest 2',
@@ -64,17 +63,17 @@ describe('/v1/match', function() {
 
     after(function (done) {
       sails.models.match.drop(function (err) {
-        done();
+        done(err);
       });
     });
 
-    it('should allow anonymous users to list every match in the platform',function (done) {
+    it('should allow anonymous users to list every match in the platform', function (done) {
       request(sails.hooks.http.app)
         .get('/v1/match')
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.not.exist;
           expect(res.body).to.exist
             .and.to.be.an('array');
@@ -99,14 +98,14 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should allow authenticated users to list every match in the platform',function (done) {
+    it('should allow authenticated users to list every match in the platform', function (done) {
       request(sails.hooks.http.app)
         .get('/v1/match')
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.not.exist;
           expect(res.body).to.exist
             .and.to.be.an('array');
@@ -126,11 +125,11 @@ describe('/v1/match', function() {
 
     before(function (done) {
       sails.models.match.create({
-          title: 'Contest 1',
-          createdBy: 0,
-          start: moment().toISOString(),
-          end: moment().add(7, 'days').toISOString()
-        })
+        title: 'Contest 1',
+        createdBy: 0,
+        start: moment().toISOString(),
+        end: moment().add(7, 'days').toISOString()
+      })
         .then(function (record) {
           matchId = record.id;
         })
@@ -139,17 +138,17 @@ describe('/v1/match', function() {
 
     after(function (done) {
       sails.models.match.drop(function (err) {
-        done();
+        done(err);
       });
     });
 
-    it('should allow anonymous users to check an specific match',function (done) {
+    it('should allow anonymous users to check an specific match', function (done) {
       request(sails.hooks.http.app)
         .get('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.not.exist;
           expect(res.body).to.exist
             .and.to.be.an('object')
@@ -168,14 +167,14 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should allow authenticated users to check a specific match',function (done) {
+    it('should allow authenticated users to check a specific match', function (done) {
       request(sails.hooks.http.app)
         .get('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.not.exist;
           expect(res.body).to.exist
             .and.to.be.an('object')
@@ -196,25 +195,24 @@ describe('/v1/match', function() {
   });
 
   describe('[POST] /', function () {
-
     after(function (done) {
       sails.models.match.drop(function (err) {
-        done();
+        done(err);
       });
     });
 
-    it('should allow root user to create a match',function (done) {
+    it('should allow root user to create a match', function (done) {
       request(sails.hooks.http.app)
         .post('/v1/match/')
         .set('Accept', 'application/json')
         .set('Authorization', rootToken)
         .send({
-            title: 'Contest X1',
-            start: moment().toISOString(),
-            end: moment().add(7, 'days').toISOString()
-          })
+          title: 'Contest X1',
+          start: moment().toISOString(),
+          end: moment().add(7, 'days').toISOString()
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(200);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -222,18 +220,18 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should allow an admin user to create a match',function (done) {
+    it('should allow an admin user to create a match', function (done) {
       request(sails.hooks.http.app)
         .post('/v1/match/')
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .send({
-            title: 'Contest X2',
-            start: moment().toISOString(),
-            end: moment().add(7, 'days').toISOString()
-          })
+          title: 'Contest X2',
+          start: moment().toISOString(),
+          end: moment().add(7, 'days').toISOString()
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(200);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -241,51 +239,53 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should not allow to any non admin user to create a match',function (done) {
+    it('should not allow to any non admin user to create a match', function (done) {
       request(sails.hooks.http.app)
         .post('/v1/match/')
         .set('Accept', 'application/json')
         .set('Authorization', judgeToken)
         .send({
-            title: 'Contest X3',
-            start: moment().toISOString(),
-            end: moment().add(7, 'days').toISOString()
-          })
+          title: 'Contest X3',
+          start: moment().toISOString(),
+          end: moment().add(7, 'days').toISOString()
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
+          expect(err).to.not.exist;
           expect(res.status).to.be.equal(403);
           expect(res.body).to.exist.and.to.have.property('message');
           done();
         });
     });
 
-    it('should not allow to anonymous user to create a match',function (done) {
+    it('should not allow to anonymous user to create a match', function (done) {
       request(sails.hooks.http.app)
         .post('/v1/match/')
         .set('Accept', 'application/json')
         .send({
-            title: 'Contest X3',
-            start: moment().toISOString(),
-            end: moment().add(7, 'days').toISOString()
-          })
+          title: 'Contest X3',
+          start: moment().toISOString(),
+          end: moment().add(7, 'days').toISOString()
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
+          expect(err).to.not.exist;
           expect(res.status).to.be.equal(401);
           expect(res.body).to.exist.and.to.have.property('message');
           done();
         });
     });
 
-    it('should respond with 400 status code on Model Validation error',function (done) {
+    it('should respond with 400 status code on Model Validation error', function (done) {
       request(sails.hooks.http.app)
         .post('/v1/match/')
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .send({
-            title: 'Contest X2',
-          })
+          title: 'Contest X2'
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(400);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -299,11 +299,11 @@ describe('/v1/match', function() {
 
     before(function (done) {
       sails.models.match.create({
-          title: 'Contest 1',
-          createdBy: 0,
-          start: moment().toISOString(),
-          end: moment().add(7, 'days').toISOString()
-        })
+        title: 'Contest 1',
+        createdBy: 0,
+        start: moment().toISOString(),
+        end: moment().add(7, 'days').toISOString()
+      })
         .then(function (record) {
           matchId = record.id;
         })
@@ -312,20 +312,20 @@ describe('/v1/match', function() {
 
     after(function (done) {
       sails.models.match.drop(function (err) {
-        done();
+        done(err);
       });
     });
 
-    it('should allow root user to update a match',function (done) {
+    it('should allow root user to update a match', function (done) {
       request(sails.hooks.http.app)
         .put('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .set('Authorization', rootToken)
         .send({
-            title: 'Contest X1'
-          })
+          title: 'Contest X1'
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(200);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -333,16 +333,16 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should allow an admin user to update a match',function (done) {
+    it('should allow an admin user to update a match', function (done) {
       request(sails.hooks.http.app)
         .put('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .send({
-            title: 'Contest X2'
-          })
+          title: 'Contest X2'
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(200);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -350,47 +350,49 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should not allow to any non admin user to update a match',function (done) {
+    it('should not allow to any non admin user to update a match', function (done) {
       request(sails.hooks.http.app)
         .put('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .set('Authorization', judgeToken)
         .send({
-            title: 'Contest X3'
-          })
+          title: 'Contest X3'
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
+          expect(err).to.not.exist;
           expect(res.status).to.be.equal(403);
           expect(res.body).to.exist.and.to.have.property('message');
           done();
         });
     });
 
-    it('should not allow to anonymous user to update a match',function (done) {
+    it('should not allow to anonymous user to update a match', function (done) {
       request(sails.hooks.http.app)
         .put('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .send({
-            title: 'Contest X4'
-          })
+          title: 'Contest X4'
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
+          expect(err).to.not.exist;
           expect(res.status).to.be.equal(401);
           expect(res.body).to.exist.and.to.have.property('message');
           done();
         });
     });
 
-    it('should respond with 400 status code on Model Validation error',function (done) {
+    it('should respond with 400 status code on Model Validation error', function (done) {
       request(sails.hooks.http.app)
         .put('/v1/match/' + matchId)
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .send({
-            createdBy: 'invalid'
-          })
+          createdBy: 'invalid'
+        })
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(400);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -406,28 +408,28 @@ describe('/v1/match', function() {
 
     before(function (done) {
       sails.models.match.create({
-          title: 'Contest 1',
-          createdBy: 0,
-          start: moment().toISOString(),
-          end: moment().add(7, 'days').toISOString()
-        })
+        title: 'Contest 1',
+        createdBy: 0,
+        start: moment().toISOString(),
+        end: moment().add(7, 'days').toISOString()
+      })
         .then(function (record) {
           matchId1 = record.id;
           return sails.models.match.create({
-              title: 'Contest 2',
-              createdBy: 0,
-              start: moment().toISOString(),
-              end: moment().add(7, 'days').toISOString()
-            });
+            title: 'Contest 2',
+            createdBy: 0,
+            start: moment().toISOString(),
+            end: moment().add(7, 'days').toISOString()
+          });
         })
         .then(function (record) {
           matchId2 = record.id;
           return sails.models.match.create({
-              title: 'Contest 3',
-              createdBy: 0,
-              start: moment().toISOString(),
-              end: moment().add(7, 'days').toISOString()
-            });
+            title: 'Contest 3',
+            createdBy: 0,
+            start: moment().toISOString(),
+            end: moment().add(7, 'days').toISOString()
+          });
         })
         .then(function (record) {
           matchId3 = record.id;
@@ -440,13 +442,13 @@ describe('/v1/match', function() {
       });
     });
 
-    it('should allow root user to delete a match',function (done) {
+    it('should allow root user to delete a match', function (done) {
       request(sails.hooks.http.app)
         .delete('/v1/match/' + matchId1)
         .set('Accept', 'application/json')
         .set('Authorization', rootToken)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(200);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -454,13 +456,13 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should allow an admin user to delete a match',function (done) {
+    it('should allow an admin user to delete a match', function (done) {
       request(sails.hooks.http.app)
         .delete('/v1/match/' + matchId2)
         .set('Accept', 'application/json')
         .set('Authorization', adminToken)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(res.status).to.be.equal(200);
           expect(err).to.not.exist;
           expect(res.body).to.exist;
@@ -468,25 +470,27 @@ describe('/v1/match', function() {
         });
     });
 
-    it('should not allow to any non admin user to delete a match',function (done) {
+    it('should not allow to any non admin user to delete a match', function (done) {
       request(sails.hooks.http.app)
         .delete('/v1/match/' + matchId3)
         .set('Accept', 'application/json')
         .set('Authorization', judgeToken)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
+          expect(err).to.not.exist;
           expect(res.status).to.be.equal(403);
           expect(res.body).to.exist.and.to.have.property('message');
           done();
         });
     });
 
-    it('should not allow to anonymous user to delete a match',function (done) {
+    it('should not allow to anonymous user to delete a match', function (done) {
       request(sails.hooks.http.app)
         .delete('/v1/match/' + matchId3)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
+          expect(err).to.not.exist;
           expect(res.status).to.be.equal(401);
           expect(res.body).to.exist.and.to.have.property('message');
           done();

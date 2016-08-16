@@ -1,14 +1,17 @@
 {
   "env": {
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "globals": {
     "sails": true
   },
+  "extends": ["eslint:recommended", "semistandard"],
+  plugins: [
+    "mocha"
+  ],
   "rules": {
-    "strict": 0,
-    "no-underscore-dangle": 0,
-    "quotes": [1, "single"],
-    "semi": [1, "always"]
+    "no-unused-vars": 0,
+    "quotes": [1, "single"]
   }
 }

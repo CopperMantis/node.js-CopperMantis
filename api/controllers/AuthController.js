@@ -12,12 +12,12 @@ module.exports = {
       .catch(res.badRequest);
   },
 
-  logout: function(req, res) {
+  logout: function (req, res) {
     // TODO: maybe blacklist the used token.
   },
 
-  register: function(req, res){
+  register: function (req, res) {
     // TODO
-  },
+  }
 
 };

@@ -9,10 +9,8 @@ var contentGenerator = helpers.factories.contentGenerator;
 
 chai.use(sinonChai);
 
-describe('controllers/ContentController', function() {
-
-  describe('.create()', function() {
-
+describe('controllers/ContentController', function () {
+  describe('.create()', function () {
     after(function (done) {
       sails.models.content.drop(function () {
         done();
@@ -20,16 +18,16 @@ describe('controllers/ContentController', function() {
     });
 
     it('should accept the request when recieves all required values', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'POST',
-          body: {
-            title: 'Page',
-            content: 'Waiting for Lorem ipsum?'
-          },
-          extra: {
-            user: { id: 0 },
-            meta: { type: 'page' }
-          }
+      var request = httpMocks.createRequest({
+        method: 'POST',
+        body: {
+          title: 'Page',
+          content: 'Waiting for Lorem ipsum?'
+        },
+        extra: {
+          user: { id: 0 },
+          meta: { type: 'page' }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -49,15 +47,15 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject the request when the user id is not sent', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'POST',
-          body: {
-            title: 'Page',
-            content: 'Waiting for Lorem ipsum?'
-          },
-          extra: {
-            meta: { type: 'page' }
-          }
+      var request = httpMocks.createRequest({
+        method: 'POST',
+        body: {
+          title: 'Page',
+          content: 'Waiting for Lorem ipsum?'
+        },
+        extra: {
+          meta: { type: 'page' }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -77,15 +75,15 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject the request when the content slug is not sent', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'POST',
-          body: {
-            title: 'Page',
-            content: 'Waiting for Lorem ipsum?'
-          },
-          extra: {
-            user: { id: 0 }
-          }
+      var request = httpMocks.createRequest({
+        method: 'POST',
+        body: {
+          title: 'Page',
+          content: 'Waiting for Lorem ipsum?'
+        },
+        extra: {
+          user: { id: 0 }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -105,8 +103,7 @@ describe('controllers/ContentController', function() {
     });
   });
 
-  describe('.find()', function() {
-
+  describe('.find()', function () {
     before(function (done) {
       sails.models.content.create([
         contentGenerator.randomPage(),
@@ -126,7 +123,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with an array of content items', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         extra: {
           meta: {
@@ -152,7 +149,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with an empty array if the collection is empty', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         extra: {
           meta: {
@@ -178,7 +175,7 @@ describe('controllers/ContentController', function() {
     });
   });
 
-  describe('.findOne()', function() {
+  describe('.findOne()', function () {
     var pageId;
     var menuId;
 
@@ -202,7 +199,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with only one content item according the content slug and its id', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           id: pageId
@@ -232,7 +229,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with 404 if the content id does not belong to content slug collection', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           id: pageId
@@ -261,7 +258,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject the request if a wrong id is provided', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           id: pageId + '123'
@@ -290,7 +287,7 @@ describe('controllers/ContentController', function() {
     });
   });
 
-  describe('.findByMatch()', function() {
+  describe('.findByMatch()', function () {
     var matchId1;
     var matchId2;
 
@@ -324,7 +321,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with an content array associated to the given matchId', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           matchId: matchId1
@@ -354,7 +351,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with an empty array if the given match does not have any content', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           matchId: matchId2
@@ -382,9 +379,9 @@ describe('controllers/ContentController', function() {
         .catch(done);
     });
 
-    //FIXME: This should be a 404 error but adds an extra validation
+    // FIXME: This should be a 404 error but adds an extra validation
     it('should respond with an empty array if the match does not exists', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           matchId: 0
@@ -414,7 +411,7 @@ describe('controllers/ContentController', function() {
     });
   });
 
-  describe('.findOneByMatch()', function() {
+  describe('.findOneByMatch()', function () {
     var matchId1;
     var matchId2;
     var contentId1;
@@ -456,11 +453,11 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with a content item associated to the given matchId and contentId', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           matchId: matchId1,
-          id: contentId1,
+          id: contentId1
         },
         extra: {
           meta: {
@@ -487,11 +484,11 @@ describe('controllers/ContentController', function() {
     });
 
     it('should respond with notFound if the given matchId and contentId are not associated', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'GET',
         params: {
           matchId: matchId2,
-          id: contentId1,
+          id: contentId1
         },
         extra: {
           meta: {
@@ -519,7 +516,7 @@ describe('controllers/ContentController', function() {
     });
   });
 
-  describe('.update()', function() {
+  describe('.update()', function () {
     var contentId1;
     var contentId2;
 
@@ -545,19 +542,19 @@ describe('controllers/ContentController', function() {
     });
 
     it('should update a content item when recieves all required values', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'PUT',
-          params: {
-            id: contentId1
-          },
-          body: {
-            title: 'New title',
-            content: 'New content'
-          },
-          extra: {
-            user: { id: 0 },
-            meta: { type: 'page' }
-          }
+      var request = httpMocks.createRequest({
+        method: 'PUT',
+        params: {
+          id: contentId1
+        },
+        body: {
+          title: 'New title',
+          content: 'New content'
+        },
+        extra: {
+          user: { id: 0 },
+          meta: { type: 'page' }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -579,20 +576,20 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject any request with an invalid value', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'PUT',
-          params: {
-            id: contentId2
-          },
-          body: {
-            title: 'New title',
-            content: 'This update has to fail',
-            type: 'foobar'
-          },
-          extra: {
-            user: { id: 0 },
-            meta: { type: 'page' }
-          }
+      var request = httpMocks.createRequest({
+        method: 'PUT',
+        params: {
+          id: contentId2
+        },
+        body: {
+          title: 'New title',
+          content: 'This update has to fail',
+          type: 'foobar'
+        },
+        extra: {
+          user: { id: 0 },
+          meta: { type: 'page' }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -614,19 +611,19 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject any request with incorrect content id', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'PUT',
-          params: {
-            id: contentId1 + '123'
-          },
-          body: {
-            title: 'New title',
-            content: 'New content'
-          },
-          extra: {
-            user: { id: 0 },
-            meta: { type: 'page' }
-          }
+      var request = httpMocks.createRequest({
+        method: 'PUT',
+        params: {
+          id: contentId1 + '123'
+        },
+        body: {
+          title: 'New title',
+          content: 'New content'
+        },
+        extra: {
+          user: { id: 0 },
+          meta: { type: 'page' }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -648,19 +645,19 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject any request with content id which does not belong to the given content type', function (done) {
-      var request  = httpMocks.createRequest({
-          method: 'PUT',
-          params: {
-            id: contentId2
-          },
-          body: {
-            title: 'New title',
-            content: 'New content'
-          },
-          extra: {
-            user: { id: 0 },
-            meta: { type: 'menu' }
-          }
+      var request = httpMocks.createRequest({
+        method: 'PUT',
+        params: {
+          id: contentId2
+        },
+        body: {
+          title: 'New title',
+          content: 'New content'
+        },
+        extra: {
+          user: { id: 0 },
+          meta: { type: 'menu' }
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -682,7 +679,7 @@ describe('controllers/ContentController', function() {
     });
   });
 
-  describe('.destroy()', function() {
+  describe('.destroy()', function () {
     var contentId1;
     var contentId2;
     var contentId3;
@@ -711,7 +708,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should delete any resource with the given id', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'DELETE',
         params: {
           id: contentId1
@@ -740,7 +737,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject any delete request for unexistent resource', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'DELETE',
         params: {
           id: contentId1
@@ -769,7 +766,7 @@ describe('controllers/ContentController', function() {
     });
 
     it('should reject any delete request for a resource id that does not belong to the given resource type', function (done) {
-      var request  = httpMocks.createRequest({
+      var request = httpMocks.createRequest({
         method: 'DELETE',
         params: {
           id: contentId2
@@ -797,6 +794,6 @@ describe('controllers/ContentController', function() {
         .catch(done);
     });
 
-    //XXX: I don't have any idea how to reproduce an exception for Waterline.destroy()
+    // XXX: I don't have any idea how to reproduce an exception for Waterline.destroy()
   });
 });

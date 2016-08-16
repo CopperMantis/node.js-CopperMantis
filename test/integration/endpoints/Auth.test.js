@@ -1,10 +1,8 @@
 var request = require('supertest');
 var expect = require('chai').expect;
 
-describe('/v1/auth', function() {
-
-  describe('[POST] /login', function() {
-
+describe('/v1/auth', function () {
+  describe('[POST] /login', function () {
     before(function (done) {
       // TODO: move this promise chaining as fixture
       sails.models.user.create({
@@ -19,7 +17,6 @@ describe('/v1/auth', function() {
       .finally(done);
     });
 
-
     it('should return a token for root user', function (done) {
       request(sails.hooks.http.app)
         .post('/v1/auth/login')
@@ -27,7 +24,7 @@ describe('/v1/auth', function() {
         .send({ username: 'ninja', password: 'h!dd3n' })
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.not.exist;
           expect(res.body.token).to.exist.and.to.be.an('string');
           done();
@@ -41,7 +38,7 @@ describe('/v1/auth', function() {
         .send({ username: 'competitor102', password: 'dummy123' })
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.not.exist;
           expect(res.body.token).to.exist.and.to.be.an('string');
           done();
@@ -68,5 +65,4 @@ describe('/v1/auth', function() {
         .expect({message: 'User not found'}, done);
     });
   });
-
 });

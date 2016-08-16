@@ -19,7 +19,7 @@ module.exports = {
 
     return sails.models.match.create(match)
       .then(function () {
-        res.ok({ message: 'Match succesfully created'});
+        res.ok({ message: 'Match succesfully created' });
       }).catch(function (err) {
         sails.log.verbose('Something went wrong with contest creation', err);
         res.negotiate(err);
@@ -29,7 +29,7 @@ module.exports = {
   destroy: function (req, res) {
     return sails.models.match.destroy(req.params.id)
       .then(function () {
-        res.ok({ message: 'Match succesfully deleted'});
+        res.ok({ message: 'Match succesfully deleted' });
       }).catch(function (err) {
         sails.log.verbose('Something went wrong with contest destroy', err);
         res.negotiate(err);

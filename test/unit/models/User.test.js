@@ -1,20 +1,19 @@
 var expect = require('chai').expect;
 
-describe('models/User', function() {
-  describe('.create()', function() {
-
+describe('models/User', function () {
+  describe('.create()', function () {
     after(function (done) {
       sails.models.user.drop(function () {
         done();
       });
     });
 
-    it('should create a user as "competitor" with hashed password', function(done) {
+    it('should create a user as "competitor" with hashed password', function (done) {
       sails.models.user.create({
         username: 'testuser',
         password: 'dummy123',
         email: 'some@body.com'
-      }).exec(function(err, record) {
+      }).exec(function (err, record) {
         expect(err).to.not.exist;
         expect(record).to.exist;
         expect(record.createdAt).to.exist;
@@ -24,7 +23,7 @@ describe('models/User', function() {
       });
     });
 
-    it('should not allow to create a user with a repeated username', function(done) {
+    it('should not allow to create a user with a repeated username', function (done) {
       sails.models.user.create({
         username: 'testuser',
         password: 'dummy123',
@@ -37,19 +36,19 @@ describe('models/User', function() {
           email: 'anyother@email.com'
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         expect(err).to.exist;
       })
       .finally(done);
     });
 
-    it('should not allow to create a user as "root"', function(done) {
+    it('should not allow to create a user as "root"', function (done) {
       sails.models.user.create({
         username: 'testuser',
         password: 'dummy123',
         email: 'some@body.com',
         role: 'root'
-      }).exec(function(err, record) {
+      }).exec(function (err, record) {
         expect(err).to.exist;
         expect(record).to.not.exist;
         done();
@@ -57,7 +56,7 @@ describe('models/User', function() {
     });
   });
 
-  describe('.update()', function() {
+  describe('.update()', function () {
     before(function (done) {
       sails.models.user.create({
         username: 'testuser',
@@ -68,11 +67,11 @@ describe('models/User', function() {
         done();
       });
     });
-    it('should update any user metadata and hash its password', function(done) {
+    it('should update any user metadata and hash its password', function (done) {
       sails.models.user.update(
         { username: 'testuser' },
         { email: 'some123@body.com', password: 'dummy1234' }
-      ).exec(function(err, record) {
+      ).exec(function (err, record) {
         expect(err).to.not.exist;
         expect(record).to.exist;
         expect(record[0].email).to.equal('some123@body.com');
@@ -88,5 +87,4 @@ describe('models/User', function() {
       });
     });
   });
-
 });

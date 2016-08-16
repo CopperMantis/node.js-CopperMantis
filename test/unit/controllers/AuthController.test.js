@@ -5,10 +5,8 @@ var httpMocks = require('../../helpers').factories.httpMocks;
 
 chai.use(sinonChai);
 
-describe('controllers/AuthController', function() {
-
-  describe('.login()', function() {
-
+describe('controllers/AuthController', function () {
+  describe('.login()', function () {
     before(function (done) {
       sails.models.user.create({
         username: 'competitor103',
@@ -23,13 +21,12 @@ describe('controllers/AuthController', function() {
     });
 
     it('should return "ok" with a token for correct credentials', function (done) {
-
-      var request  = httpMocks.createRequest({
-          method: 'POST',
-          body: {
-            username: 'competitor103',
-            password: 'dummy123'
-          }
+      var request = httpMocks.createRequest({
+        method: 'POST',
+        body: {
+          username: 'competitor103',
+          password: 'dummy123'
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -52,13 +49,12 @@ describe('controllers/AuthController', function() {
     });
 
     it('should return "bad request" for registered user with wrong password', function (done) {
-
-      var request  = httpMocks.createRequest({
-          method: 'POST',
-          body: {
-            username: 'competitor102',
-            password: 'wrong-password'
-          }
+      var request = httpMocks.createRequest({
+        method: 'POST',
+        body: {
+          username: 'competitor102',
+          password: 'wrong-password'
+        }
       });
 
       var response = httpMocks.createResponse({
@@ -78,13 +74,12 @@ describe('controllers/AuthController', function() {
     });
 
     it('should return "bad request" for unregistered user', function (done) {
-
-      var request  = httpMocks.createRequest({
-          method: 'POST',
-          body: {
-            username: 'nobody',
-            password: 'doesnt-matter'
-          }
+      var request = httpMocks.createRequest({
+        method: 'POST',
+        body: {
+          username: 'nobody',
+          password: 'doesnt-matter'
+        }
       });
 
       var response = httpMocks.createResponse({
